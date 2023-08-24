@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React - Develop Push
+          Learn React - Develop Push - Dominic Branch
         </a>
       </header>
     </div>
