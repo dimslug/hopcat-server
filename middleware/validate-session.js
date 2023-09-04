@@ -1,13 +1,13 @@
 const jwt = require('jsonwebtoken');
-const users = require('../models/user.model');
+const creators = require('../models/creator.model');
 
 const validateSession = async(req,res,next) => {
     try {
         const token = req.headers.authorization;
         const decoded = await jwt.verify(token, process.env.JWT);
         // console.log(decoded);
-        const user = await users.findById(decoded.id);
-        req.user = user;
+        const creator = await creators.findById(decoded.id);
+        req.creator = creator;
         return next(); 
     } catch (err) {
         `Error: ${err.message}`

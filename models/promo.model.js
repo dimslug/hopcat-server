@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const PromotionSchema = new mongoose.Schema({
-promotionID: {
+const PromoSchema = new mongoose.Schema({
+promoID: {
     type: mongoose.Types.ObjectId,
     required: true,
     unique: true
@@ -19,11 +19,16 @@ drinkID: {
     required: true
 
 },
-influencerID: {
-    type: mongoose.Types.ObjectId,
-    ref: "Influencer",
+//! Or an array of usernames or combination of ID's and usernames
+// influencerID: {
+//     type: mongoose.Types.ObjectId,
+//     ref: "Influencer",
 
+// },
+promoText: {
+    type: String
 },
+
 startDate: {
     type: Date,
     required: true
@@ -39,4 +44,4 @@ endDate: {
 
 })
 
-module.exports = mongoose.model("Promotion", PromotionSchema)
+module.exports = mongoose.model("Promo", PromoSchema)
