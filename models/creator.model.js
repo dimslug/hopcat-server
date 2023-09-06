@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const CreatorSchema = new mongoose.Schema({
-    creatorID: {
-        type: mongoose.Types.ObjectId,
-        required: true,
-        unique: true
-    },
+    // creatorID: {
+    //     type: mongoose.Types.ObjectId,
+    //     required: true,
+    //     unique: true
+    // },
     username: {
          type: String,
         required: true,

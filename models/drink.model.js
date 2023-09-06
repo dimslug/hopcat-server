@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
 
 const DrinkSchema = new mongoose.Schema({
-drinkID: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-    unique: true
+// drinkID: {
+//     type: mongoose.Types.ObjectId,
+//     required: true,
+//     unique: true
+// },
+name: {
+    type: String,
+    required: true
 },
 creatorID: {
     type: mongoose.Types.ObjectId,
@@ -12,27 +16,27 @@ creatorID: {
     required: true
 },
 cat1: {
-    type: string,
+    type: String,
     required: true
 },
 cat2: {
-    type: string
+    type: String
 
 },
 cat3: {
-    type: string
+    type: String
 
 },
 price: {
-    type: number
+    type: Number
 
 },
 description:{
-    type: string
+    type: String
 
 },
 photo:{
-    type: string
+    type: String
 
 },
 ingredients: [],

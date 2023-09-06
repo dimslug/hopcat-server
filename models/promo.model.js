@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const PromoSchema = new mongoose.Schema({
-promoID: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-    unique: true
+// promoID: {
+//     type: mongoose.Types.ObjectId,
+//     required: true,
+//     unique: true
 
-},
+// },
 creatorID: {
     type: mongoose.Types.ObjectId,
     ref: "Creator",

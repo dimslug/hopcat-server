@@ -8,7 +8,7 @@ const log = console.log;
 router.post('/:drinkID/create', validateSession, async (req, res) => {
 
     try {
-     
+  
         const creatorID = req.creator._id;
         const drinkID = req.params.drinkID;
         // const influencerID = req.body.influencerID;
@@ -27,7 +27,7 @@ router.post('/:drinkID/create', validateSession, async (req, res) => {
         });
 
         const newPromo = await promo.save();
-        newDrink ? success(res, newPromo) : incomplete(res);
+        newPromo ? success(res, newPromo) : incomplete(res);
 
 
 
@@ -39,8 +39,8 @@ router.post('/:drinkID/create', validateSession, async (req, res) => {
 // !! Get All by creatorID -- GET
 router.get("/:creatorID/", async (req, res) => {
     try {
-      const creatorId = req.params.creatorID;
-      const getAllPromos = await Promo.find({ creatorId: creatorId });
+      const creatorID = req.params.creatorID;
+      const getAllPromos = await Promo.find({ creatorID: creatorID });
   
       getAllPromos ? success(res, getAllPromos) : incomplete(res);
     } catch (err) {
@@ -81,12 +81,12 @@ router.patch("/:promoID", validateSession, async (req, res) => {
 // !! Delete -- DELETE
 router.delete("/:promoID", validateSession, async (req, res) => {
     try {
-      const promoId = req.params.promoID;
-      const creatorId = req.creator._id;
+      const promoID = req.params.promoID;
+      const creatorID = req.creator._id;
    
       const deletePromo = await Promo.deleteOne({
-        _id: promoId,
-        creatorId: creatorId,
+        _id: promoID,
+        creatorID: creatorID,
       });
   
       if (!deletePromo) {
@@ -99,3 +99,6 @@ router.delete("/:promoID", validateSession, async (req, res) => {
       error(res, err);
     }
   });
+
+
+  module.exports = router;
