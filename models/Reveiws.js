@@ -9,14 +9,3 @@ class Review {
   }
 }
 
-// Example usage:
-const sampleReview = new Review(
-  "R123",
-  "D456",
-  "I789",
-  { stars: 4, maxStars: 5 },
-  "A great drink! Highly recommended.",
-  "https://example.com/review.jpg"
-);
-
-console.log(sampleReview);

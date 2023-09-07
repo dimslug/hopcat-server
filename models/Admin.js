@@ -8,15 +8,3 @@ class Admin {
     this.email = email;
   }
 }
-
-// Example usage:
-const sampleAdmin = new Admin(
-  "A123",
-  "ID456",
-  "John",
-  "Doe",
-  "johndoe",
-  "johndoe@example.com"
-);
-
-console.log(sampleAdmin);
