@@ -26,12 +26,12 @@ const UserSchema = new mongoose.Schema({
         dateOfBirth: {
             type: Date,
             required: true            
-        },
+        }/* ,
         influencerID: {
             type: mongoose.Schema.Types.ObjectId,
             unique: true,
             required: true            
-        }
+        } */
 })
 
 module.exports = mongoose.model('Influencer', UserSchema)
