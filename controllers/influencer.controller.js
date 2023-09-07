@@ -62,6 +62,8 @@ router.post('/login/influencer', async(req, res) => {
             token
         })
 
+    }   catch (err) {
+        errorResponse(res, err)
     }
 
 
@@ -87,7 +89,7 @@ router.get('/influencer/' , validateSession, async (req, res) => {
 });
 
 //! Get One by ID
-router.get('/influencer/:id', async (req, res) => {
+router.get('/influencer/:id', validateSession, async (req, res) => {
     try {
         const { _id } = req.params;
         const getInfl = await Influencer.findOne( {id: _id} );
@@ -99,19 +101,49 @@ router.get('/influencer/:id', async (req, res) => {
             res.status(404).json({
                 message: 'no influencer found'
             })
+    }   catch (err) {
+        errorResponse(res, err)
     }
 })
 
 
 //! Update by ID
-router.patch('/influencer/update/:id', async (req, res) => {
+router.patch('/influencer/update/:id', validateSession, async (req, res) => {
+    try {
+        const { id } = req.params;
 
+        const filter = {_id: id}
+
+        const info = req.body;
+
+        const returnOption = {new: true};
+
+        const update = await Influencer.findOneAndUpdate(filter, info, returnOption);
+
+        res.status(200).json({
+            message: `${updates.username} Updated!`,
+            update
+        })
+    } catch (err) {
+        errorResponse(res, err)
+    }
 })
 
 
 //! Delete by ID
-router.delete('/influencer/delete/:id', async (req, res) => {
+router.delete('/influencer/delete/:id', validateSession, async (req, res) => {
+    try {
+        const { id } = req.params;
 
+        const deleteInfl = await Influencer.deleteOne({_id: id});
+
+        deleteRoom.deleteCount ?
+            res.status(200).json({message: 'Influencer Deleted'}) :
+            req.status(404).json({message: 'No Influencer Found'})
+
+    } catch (err) {
+        errorResponse(res, err);
+    }
 })
 
 module.exports = router;
