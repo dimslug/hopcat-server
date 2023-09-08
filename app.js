@@ -9,6 +9,7 @@ const app = express();
 const log = console.log;
 const PORT = process.env.PORT
 const { db } = require('./db');
+const influencer = require('./controllers/influencer.controller')
 
 
 //! Middleware
@@ -16,6 +17,7 @@ app.use(express.json());
 
 
 //! Routes
+app.use('/influencer', influencer);
 
 //! Connection
 const server = async() => {

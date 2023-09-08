@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { response } = require('express');
 const Influencer = require('../models/influencer.model');
-const bcrypt = require(bcrypt);
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const validateSession = require('../middleware/validate-session');
 const SECRET = process.env.JWT;
@@ -16,10 +16,10 @@ const errorResponse = (res, error) => {
 
 
 //! Signup POST
-router.post('/signup/influencer', async (req, res) =>  {
+router.post('/influencer/signup', async (req, res) =>  {
     try{
         
-        const influencer = new User({
+        const influencer = new Influencer({
             username: req.body.username,
             email: req.body.email,
             firstName: req.body.firstName,
@@ -28,12 +28,12 @@ router.post('/signup/influencer', async (req, res) =>  {
             password: bcrypt.hashSync(req.body.password, 13)
         })
 
-        const newUser = await user.save();
+        const newInfluencer = await influencer.save();
 
-        const token = jwt.sign({id: newUser._id}, SECRET, {expiresIn: "1 day"});
+        const token = jwt.sign({id: newInfluencer._id}, SECRET, {expiresIn: "1 day"});
 
         res.status(200).json({
-            user: newUser,
+            influencer: newInfluencer,
             message: 'success',
             token
         })
@@ -44,11 +44,11 @@ router.post('/signup/influencer', async (req, res) =>  {
 });
 
 //! Login POST
-router.post('/login/influencer', async(req, res) => {
+router.post('/influencer/login', async(req, res) => {
     try {
         const { email, password } = req.body;
 
-        const user = await User.findOne({email: email});
+        const influencer = await Influencer.findOne({email: email});
 
         const passwordMatch = await bcrypt.compare(password, user.password);
 
