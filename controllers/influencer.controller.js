@@ -16,7 +16,7 @@ const errorResponse = (res, error) => {
 
 
 //! Signup POST
-router.post('/influencer/signup', async (req, res) =>  {
+router.post('/signup', async (req, res) =>  {
     try{
         
         const influencer = new Influencer({
@@ -24,8 +24,8 @@ router.post('/influencer/signup', async (req, res) =>  {
             email: req.body.email,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            dateOfBirth: req.body.dateOfBirth,
-            password: bcrypt.hashSync(req.body.password, 13)
+            password: bcrypt.hashSync(req.body.password, 13),
+            dateOfBirth: req.body.dateOfBirth
         })
 
         const newInfluencer = await influencer.save();
@@ -44,25 +44,26 @@ router.post('/influencer/signup', async (req, res) =>  {
 });
 
 //! Login POST
-router.post('/influencer/login', async(req, res) => {
+router.post('/login', async(req, res) => {
     try {
         const { email, password } = req.body;
 
         const influencer = await Influencer.findOne({email: email});
 
-        const passwordMatch = await bcrypt.compare(password, user.password);
+        const passwordMatch = await bcrypt.compare(password, influencer.password);
 
-        if(!user || !password) throw new Error('Email or Password does not match');
+        if(!influencer || !passwordMatch) throw new Error('Email or Password does not match');
 
-        const token = jwt.sign({id: user._id}. SECRET, {expiresIn: "1 day"});
+        const token = jwt.sign({id: influencer._id}, SECRET, {expiresIn: "1 day"});
 
-        req.status(200).json({
+        res.status(200).json({
             message: 'success',
-            user,
+            influencer,
             token
         })
 
     }   catch (err) {
+        console.log(err)
         errorResponse(res, err)
     }
 
@@ -70,12 +71,12 @@ router.post('/influencer/login', async(req, res) => {
 });
 
 //! Get all
-router.get('/influencer/' , validateSession, async (req, res) => {
+router.get('/' , validateSession, async (req, res) => {
     try {
 
         const getAllInfl = await Influencer.find();
 
-        gettAllInfl ?
+        getAllInfl ?
             res.status(200).json({
                 getAllInfl
             }) :
@@ -84,12 +85,13 @@ router.get('/influencer/' , validateSession, async (req, res) => {
             });                          
 
     } catch (err) {
+        console.log(err)
         errorResponse(res, err)
     }
 });
 
 //! Get One by ID
-router.get('/influencer/:id', validateSession, async (req, res) => {
+router.get('/:id', validateSession,  async (req, res) => {
     try {
         const { _id } = req.params;
         const getInfl = await Influencer.findOne( {id: _id} );
@@ -108,7 +110,7 @@ router.get('/influencer/:id', validateSession, async (req, res) => {
 
 
 //! Update by ID
-router.patch('/influencer/update/:id', validateSession, async (req, res) => {
+router.patch('/update/:id', validateSession,  async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -118,11 +120,11 @@ router.patch('/influencer/update/:id', validateSession, async (req, res) => {
 
         const returnOption = {new: true};
 
-        const update = await Influencer.findOneAndUpdate(filter, info, returnOption);
+        const updated = await Influencer.findOneAndUpdate(filter, info, returnOption);
 
         res.status(200).json({
-            message: `${updates.username} Updated!`,
-            update
+            message: `${updated.username} Updated!`,
+            updated
         })
     } catch (err) {
         errorResponse(res, err)
@@ -131,15 +133,15 @@ router.patch('/influencer/update/:id', validateSession, async (req, res) => {
 
 
 //! Delete by ID
-router.delete('/influencer/delete/:id', validateSession, async (req, res) => {
+router.delete('/delete/:id', validateSession,  async (req, res) => {
     try {
         const { id } = req.params;
 
         const deleteInfl = await Influencer.deleteOne({_id: id});
 
-        deleteRoom.deleteCount ?
+        deleteInfl.deleteCount ?
             res.status(200).json({message: 'Influencer Deleted'}) :
-            req.status(404).json({message: 'No Influencer Found'})
+            res.status(404).json({message: 'No Influencer Found'})
 
     } catch (err) {
         errorResponse(res, err);

@@ -1,15 +1,16 @@
 const jwt = require('jsonwebtoken');
-const influencer = require('../models/influencer.model');
+const Influencer = require('../models/influencer.model');
 
 const validateSession = async(req,res,next) => {
     try {
         const token = req.headers.authorization;
         const decoded = await jwt.verify(token, process.env.JWT);
         // console.log(decoded);
-        const user = await influencer.findById(decoded.id);
-        req.user = user;
+        const influencer = await Influencer.findById(decoded.id);
+        req.influencer = influencer;
         return next(); 
     } catch (err) {
+        res.json({message: err.message});
         `Error: ${err.message}`
         console.log(err)
         // res.json({message: err.message});
