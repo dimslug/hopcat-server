@@ -1,49 +1,75 @@
-const express = require("express");
-const app = express();
-const port = 3000;
+const Admin = require("../models/AdminModel");
 
-app.use(express.json());
-
-let admins = [];
-
-const generateID = () => {
-  return "_" + Math.random().toString(36).substr(2, 9);
+const createAdmin = async (req, res) => {
+  try {
+    const adminData = req.body;
+    const newAdmin = new Admin(adminData);
+    const savedAdmin = await newAdmin.save();
+    res.status(201).json(savedAdmin);
+  } catch (error) {
+    res.status(500).json({ error: "Could not create the admin" });
+  }
 };
 
-app.post("/admins", (req, res) => {
-  const adminData = req.body;
-  adminData.adminID = generateID();
-  admins.push(adminData);
-  res.status(201).json(adminData);
-});
-
-app.patch("/admins/:adminID", (req, res) => {
-  const adminID = req.params.adminID;
-  const updatedData = req.body;
-
-  const adminIndex = admins.findIndex((admin) => admin.adminID === adminID);
-
-  if (adminIndex === -1) {
-    return res.status(404).json({ error: "Admin not found" });
+const getAllAdmins = async (req, res) => {
+  try {
+    const admins = await Admin.find();
+    res.status(200).json(admins);
+  } catch (error) {
+    res.status(500).json({ error: "Could not retrieve admins" });
   }
+};
 
-  admins[adminIndex] = { ...admins[adminIndex], ...updatedData };
-  res.status(200).json(admins[adminIndex]);
-});
-
-app.delete("/admins/:adminID", (req, res) => {
-  const adminID = req.params.adminID;
-
-  const adminIndex = admins.findIndex((admin) => admin.adminID === adminID);
-
-  if (adminIndex === -1) {
-    return res.status(404).json({ error: "Admin not found" });
+const getAdminById = async (req, res) => {
+  try {
+    const adminID = req.params.adminID;
+    const admin = await Admin.findOne({ adminID });
+    if (!admin) {
+      return res.status(404).json({ error: "Admin not found" });
+    }
+    res.status(200).json(admin);
+  } catch (error) {
+    res.status(500).json({ error: "Could not retrieve the admin" });
   }
+};
 
-  admins.splice(adminIndex, 1);
-  res.status(204).send();
-});
+const updateAdminById = async (req, res) => {
+  try {
+    const adminID = req.params.adminID;
+    const updatedData = req.body;
+    const updatedAdmin = await Admin.findOneAndUpdate(
+      { adminID },
+      updatedData,
+      {
+        new: true,
+      }
+    );
+    if (!updatedAdmin) {
+      return res.status(404).json({ error: "Admin not found" });
+    }
+    res.status(200).json(updatedAdmin);
+  } catch (error) {
+    res.status(500).json({ error: "Could not update the admin" });
+  }
+};
 
-app.listen(port, () => {
-  console.log(`Admin server is running on port ${port}`);
-});
+const deleteAdminById = async (req, res) => {
+  try {
+    const adminID = req.params.adminID;
+    const deletedAdmin = await Admin.findOneAndDelete({ adminID });
+    if (!deletedAdmin) {
+      return res.status(404).json({ error: "Admin not found" });
+    }
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: "Could not delete the admin" });
+  }
+};
+
+module.exports = {
+  createAdmin,
+  getAllAdmins,
+  getAdminById,
+  updateAdminById,
+  deleteAdminById,
+};
