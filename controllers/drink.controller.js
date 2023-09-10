@@ -42,7 +42,7 @@ router.post('/create', validateSession, async (req, res) => {
 })
 
 // !! Update -- PATCH
-router.patch("/:drinkID", validateSession, async (req, res) => {
+router.patch("/edit/:drinkID", validateSession, async (req, res) => {
     try {
       
         const drinkID = req.params.drinkID;
@@ -76,7 +76,7 @@ router.patch("/:drinkID", validateSession, async (req, res) => {
 })
 
 // !! Delete -- DELETE
-router.delete("/:drinkID", validateSession, async (req, res) => {
+router.delete("/delete/:drinkID", validateSession, async (req, res) => {
     try {
       const drinkID = req.params.drinkID;
       const creatorID = req.creator._id;

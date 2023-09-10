@@ -49,7 +49,7 @@ router.get("/:creatorID/", async (req, res) => {
   });
 
 // !! Update -- PATCH
-router.patch("/:promoID", validateSession, async (req, res) => {
+router.patch("/edit/:promoID", validateSession, async (req, res) => {
     try {
         const promoID = req.params.promoID;
         const creatorID = req.creator._id;
@@ -79,7 +79,7 @@ router.patch("/:promoID", validateSession, async (req, res) => {
 })
 
 // !! Delete -- DELETE
-router.delete("/:promoID", validateSession, async (req, res) => {
+router.delete("/delete/:promoID", validateSession, async (req, res) => {
     try {
       const promoID = req.params.promoID;
       const creatorID = req.creator._id;
