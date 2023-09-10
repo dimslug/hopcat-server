@@ -1,75 +1,135 @@
+const express = require("express");
+const router = express.Router();
 const Admin = require("../models/AdminModel");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const SECRET = process.env.JWT;
 
-const createAdmin = async (req, res) => {
+const errorResponse = (res, error) => {
+  return res.status(500).json({
+    error: error.message,
+  });
+};
+
+//! Signup POST
+router.post("/admin/signup", async (req, res) => {
   try {
-    const adminData = req.body;
-    const newAdmin = new Admin(adminData);
-    const savedAdmin = await newAdmin.save();
-    res.status(201).json(savedAdmin);
-  } catch (error) {
-    res.status(500).json({ error: "Could not create the admin" });
-  }
-};
+    const admin = new Admin({
+      username: req.body.username,
+      email: req.body.email,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      password: bcrypt.hashSync(req.body.password, 13),
+    });
 
-const getAllAdmins = async (req, res) => {
+    const newAdmin = await admin.save();
+
+    const token = jwt.sign({ id: newAdmin._id }, SECRET, {
+      expiresIn: "1 day",
+    });
+
+    res.status(200).json({
+      admin: newAdmin,
+      message: "success",
+      token,
+    });
+  } catch (err) {
+    errorResponse(res, err);
+  }
+});
+
+//! Login POST
+router.post("/admin/login", async (req, res) => {
   try {
-    const admins = await Admin.find();
-    res.status(200).json(admins);
-  } catch (error) {
-    res.status(500).json({ error: "Could not retrieve admins" });
-  }
-};
+    const { email, password } = req.body;
 
-const getAdminById = async (req, res) => {
+    const admin = await Admin.findOne({ email: email });
+
+    const passwordMatch = await bcrypt.compare(password, admin.password);
+
+    if (!admin || !passwordMatch)
+      throw new Error("Email or Password does not match");
+
+    const token = jwt.sign({ id: admin._id }, SECRET, { expiresIn: "1 day" });
+
+    res.status(200).json({
+      message: "success",
+      admin,
+      token,
+    });
+  } catch (err) {
+    errorResponse(res, err);
+  }
+});
+
+//! Get all
+router.get("/admin/", async (req, res) => {
   try {
-    const adminID = req.params.adminID;
-    const admin = await Admin.findOne({ adminID });
-    if (!admin) {
-      return res.status(404).json({ error: "Admin not found" });
-    }
-    res.status(200).json(admin);
-  } catch (error) {
-    res.status(500).json({ error: "Could not retrieve the admin" });
-  }
-};
+    const getAllAdmins = await Admin.find();
 
-const updateAdminById = async (req, res) => {
+    getAllAdmins
+      ? res.status(200).json({
+          getAllAdmins,
+        })
+      : res.status(404).json({
+          message: `No admin(s) Found`,
+        });
+  } catch (err) {
+    errorResponse(res, err);
+  }
+});
+
+//! Get One by ID
+router.get("/admin/:id", async (req, res) => {
   try {
-    const adminID = req.params.adminID;
-    const updatedData = req.body;
-    const updatedAdmin = await Admin.findOneAndUpdate(
-      { adminID },
-      updatedData,
-      {
-        new: true,
-      }
-    );
-    if (!updatedAdmin) {
-      return res.status(404).json({ error: "Admin not found" });
-    }
-    res.status(200).json(updatedAdmin);
-  } catch (error) {
-    res.status(500).json({ error: "Could not update the admin" });
-  }
-};
+    const { id } = req.params;
+    const getAdmin = await Admin.findOne({ _id: id });
 
-const deleteAdminById = async (req, res) => {
+    getAdmin
+      ? res.status(200).json({
+          getAdmin,
+        })
+      : res.status(404).json({
+          message: "No admin found",
+        });
+  } catch (err) {
+    errorResponse(res, err);
+  }
+});
+
+//! Update by ID
+router.patch("/admin/update/:id", async (req, res) => {
   try {
-    const adminID = req.params.adminID;
-    const deletedAdmin = await Admin.findOneAndDelete({ adminID });
-    if (!deletedAdmin) {
-      return res.status(404).json({ error: "Admin not found" });
-    }
-    res.status(204).send();
-  } catch (error) {
-    res.status(500).json({ error: "Could not delete the admin" });
-  }
-};
+    const { id } = req.params;
 
-module.exports = {
-  createAdmin,
-  getAllAdmins,
-  getAdminById,
-  updateAdminById,
-  deleteAdminById,
-};
+    const filter = { _id: id };
+    const info = req.body;
+    const returnOption = { new: true };
+
+    const update = await Admin.findOneAndUpdate(filter, info, returnOption);
+
+    res.status(200).json({
+      message: `${update.username} Updated!`,
+      update,
+    });
+  } catch (err) {
+    errorResponse(res, err);
+  }
+});
+
+//! Delete by ID
+router.delete("/admin/delete/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleteAdmin = await Admin.deleteOne({ _id: id });
+
+    deleteAdmin.deletedCount
+      ? res.status(200).json({ message: "Admin Deleted" })
+      : req.status(404).json({ message: "No Admin Found" });
+  } catch (err) {
+    errorResponse(res, err);
+  }
+});
+
+module.exports = router;
