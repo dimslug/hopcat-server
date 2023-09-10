@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 const connection = process.env.DBURL;
 const collection = process.env.COLL;
@@ -19,3 +20,4 @@ const db = async () => {
 }
 
 module.exports = { db, mongoose }; // exporting both the function and dependency connection.
+
