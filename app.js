@@ -1,4 +1,3 @@
-
 //! Dependencies
 require("dotenv").config(); // connects our .env file to our complete project.
 const express = require("express");
@@ -13,7 +12,6 @@ const jwt = require('jsonwebtoken')
 
 //! IMPORTS
 const { promoController, drinkController, creatorController } = require("./controllers");
-const { db } = require('./db');
 
 //! MIDDLEWARE
 //* data handling
@@ -33,8 +31,5 @@ const server = async() => {
     app.listen(PORT, () => log(`Hopspot Server running on Port: ${PORT}`) )
 
 
-
-
-
-
-
+}
+server()
