@@ -31,7 +31,9 @@ const server = async() => {
 
     db();
     app.listen(PORT, () => log(`Hopspot Server running on Port: ${PORT}`) )
+}
 
+server();
 
 
 

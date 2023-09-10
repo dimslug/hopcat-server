@@ -7,26 +7,26 @@ const CreatorSchema = new mongoose.Schema({
     //     unique: true
     // },
     username: {
-         type: String,
+        type: String,
         required: true,
         unique: true
     },
-    firstName:{
-         type: String,
+    firstName: {
+        type: String,
         required: false,
-        
+
     },
-    lastName:{
-         type: String,
+    lastName: {
+        type: String,
         required: false,
-        
+
     },
-    email:{
-         type: String,
+    email: {
+        type: String,
         required: true,
         unique: true
     },
-    password:{
+    password: {
         type: String,
         required: true,
     },
