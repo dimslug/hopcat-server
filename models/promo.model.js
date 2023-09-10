@@ -1,44 +1,44 @@
 const mongoose = require("mongoose");
 
 const PromoSchema = new mongoose.Schema({
-// promoID: {
-//     type: mongoose.Types.ObjectId,
-//     required: true,
-//     unique: true
+    // promoID: {
+    //     type: mongoose.Types.ObjectId,
+    //     required: true,
+    //     unique: true
 
-// },
-creatorID: {
-    type: mongoose.Types.ObjectId,
-    ref: "Creator",
-    required: true
+    // },
+    creatorID: {
+        type: mongoose.Types.ObjectId,
+        ref: "Creator",
+        required: true
 
-},
-drinkID: {
-    type: mongoose.Types.ObjectId,
-    ref: "Drink",
-    required: true
+    },
+    drinkID: {
+        type: mongoose.Types.ObjectId,
+        ref: "Drink",
+        required: true
 
-},
-//! Or an array of usernames or combination of ID's and usernames
-// influencerID: {
-//     type: mongoose.Types.ObjectId,
-//     ref: "Influencer",
+    },
+    //! Or an array of usernames or combination of ID's and usernames
+    // influencerID: {
+    //     type: mongoose.Types.ObjectId,
+    //     ref: "Influencer",
 
-// },
-promoText: {
-    type: String
-},
+    // },
+    promoText: {
+        type: String
+    },
 
-startDate: {
-    type: Date,
-    required: true
+    startDate: {
+        type: Date,
+        required: true
 
-},
-endDate: {
-    type: Date,
+    },
+    endDate: {
+        type: Date,
 
 
-},
+    },
 
 
 
