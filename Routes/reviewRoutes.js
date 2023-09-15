@@ -1,14 +1,28 @@
 const express = require("express");
 const router = express.Router();
-const { authenticate } = require("./authMiddleware");
 const Review = require("../models/reviewModel");
+const authenticate = require("../middleware/authMiddleware");
+
 router.post("/reviews", authenticate, async (req, res) => {
   try {
-    if (req.user.role === "influencer") {
-      return res.status(201).json({ message: "Review created successfully" });
+    const { reviewType, reviewTypeID } = req.body;
+
+    if (
+      req.user.role === "influencer" &&
+      (reviewType === "creator" || reviewType === "drink")
+    ) {
+      const reviewData = req.body;
+      const newReview = new Review(reviewData);
+      const savedReview = await newReview.save();
+      return res.status(201).json(savedReview);
     }
 
-    return res.status(403).json({ message: "Forbidden" });
+    return res
+      .status(403)
+      .json({
+        error:
+          "Forbidden: Only influencers can create reviews for creators and drinks",
+      });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -21,15 +35,23 @@ router.delete("/reviews/:reviewId", authenticate, async (req, res) => {
     if (!review) {
       return res.status(404).json({ message: "Review not found" });
     }
+
     if (
       req.user.role === "admin" ||
-      (req.user.role === "influencer" && req.user.userId === review.creatorId)
+      (req.user.role === "influencer" &&
+        (req.user.userId === review.influencerID ||
+          req.user.userId === review.creatorID))
     ) {
       await review.remove();
       return res.status(204).send();
     }
 
-    return res.status(403).json({ message: "Forbidden" });
+    return res
+      .status(403)
+      .json({
+        error:
+          "Forbidden: Only admins, the review creator, or the reviewed creator can delete reviews",
+      });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -37,9 +59,8 @@ router.delete("/reviews/:reviewId", authenticate, async (req, res) => {
 
 router.get("/reviews", async (req, res) => {
   try {
-    const reviews = await Review.find({});
-
-    res.status(200).json({ reviews });
+    const reviews = await Review.find();
+    res.status(200).json(reviews);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
