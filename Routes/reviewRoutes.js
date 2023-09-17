@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Review = require("../models/reviewModel");
-const authenticate = require("../middleware/authMiddleware");
+const authenticate = require("..authMiddleware");
 
 router.post("/reviews", authenticate, async (req, res) => {
   try {
@@ -17,12 +17,10 @@ router.post("/reviews", authenticate, async (req, res) => {
       return res.status(201).json(savedReview);
     }
 
-    return res
-      .status(403)
-      .json({
-        error:
-          "Forbidden: Only influencers can create reviews for creators and drinks",
-      });
+    return res.status(403).json({
+      error:
+        "Forbidden: Only influencers can create reviews for creators and drinks",
+    });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -46,12 +44,10 @@ router.delete("/reviews/:reviewId", authenticate, async (req, res) => {
       return res.status(204).send();
     }
 
-    return res
-      .status(403)
-      .json({
-        error:
-          "Forbidden: Only admins, the review creator, or the reviewed creator can delete reviews",
-      });
+    return res.status(403).json({
+      error:
+        "Forbidden: Only admins, the review creator, or the reviewed creator can delete reviews",
+    });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }

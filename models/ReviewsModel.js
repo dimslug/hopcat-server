@@ -12,11 +12,11 @@ const reviewSchema = new mongoose.Schema({
     enum: ["creator", "drink"],
   },
   reviewTypeID: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   influencerID: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   rating: {

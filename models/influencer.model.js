@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const UserSchema = new mongoose.Schema({
+const influencerSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -9,7 +9,7 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unqiue: true,
+    unique: true,
   },
   firstName: {
     type: String,
@@ -26,12 +26,27 @@ const UserSchema = new mongoose.Schema({
   dateOfBirth: {
     type: Date,
     required: true,
-  } /* ,
+  },
+  following: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Influencer",
+    },
+  ],
+
+  followingCreators: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Creator",
+    },
+  ],
+});
+
+module.exports = mongoose.model("Influencer", influencerSchema);
+
+/* ,
         influencerID: {
             type: mongoose.Schema.Types.ObjectId,
             unique: true,
             required: true            
-        } */,
-});
-
-module.exports = mongoose.model("Influencer", UserSchema);
+        } */

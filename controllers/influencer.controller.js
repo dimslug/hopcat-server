@@ -144,4 +144,65 @@ router.delete("/delete/:id", validateSession, async (req, res) => {
   }
 });
 
+//! Follow an influencer
+router.post(
+  "/follow/influencer/:influencerId",
+  validateSession,
+  async (req, res) => {
+    try {
+      const { influencerId } = req.params;
+      const influencerToFollow = await Influencer.findById(influencerId);
+
+      if (!influencerToFollow) {
+        return res.status(404).json({ message: "Influencer not found" });
+      }
+
+      const currentUser = req.user;
+
+      if (currentUser.following.includes(influencerId)) {
+        return res
+          .status(400)
+          .json({ message: "Already following this influencer" });
+      }
+
+      currentUser.following.push(influencerId);
+      await currentUser.save();
+
+      res
+        .status(200)
+        .json({ message: "You are now following this influencer" });
+    } catch (err) {
+      errorResponse(res, err);
+    }
+  }
+);
+
+//! Follow a creator
+router.post("/follow/creator/:creatorId", validateSession, async (req, res) => {
+  try {
+    const { creatorId } = req.params;
+
+    const creatorToFollow = await Creator.findById(creatorId);
+
+    if (!creatorToFollow) {
+      return res.status(404).json({ message: "Creator not found" });
+    }
+
+    const currentUser = req.user;
+
+    if (currentUser.followingCreators.includes(creatorId)) {
+      return res
+        .status(400)
+        .json({ message: "Already following this creator" });
+    }
+
+    currentUser.followingCreators.push(creatorId);
+    await currentUser.save();
+
+    res.status(200).json({ message: "You are now following this creator" });
+  } catch (err) {
+    errorResponse(res, err);
+  }
+});
+
 module.exports = router;
