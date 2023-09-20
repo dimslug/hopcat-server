@@ -20,6 +20,7 @@ function Auth(props) {
                     <Col md="6">
                         <CreatorSignup
                             updateToken={props.updateToken}
+                            updateCreatorID={props.updateCreatorID}
                         />
                     </Col>
                 </Row> :
@@ -27,7 +28,7 @@ function Auth(props) {
                     <Col md="6">
                         <CreatorLogin
                             updateToken={props.updateToken}
-                            username={props.currentUsername}
+                            updateCreatorID={props.updateCreatorID}
                         />
                     </Col>
                 </Row>

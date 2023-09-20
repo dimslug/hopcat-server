@@ -1,5 +1,4 @@
 import React from 'react'
-import { Col, Navbar, Row, } from 'reactstrap'
 
 export default function Footer() {
 

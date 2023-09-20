@@ -2,7 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
 
-function Logout({ setSessionToken }) {
+function Logout({ setSessionToken, setCreatorID }) {
+
     const navigate = useNavigate();
   
     const signout = () => {
@@ -11,6 +12,8 @@ function Logout({ setSessionToken }) {
 
     localStorage.removeItem("token");
     setSessionToken("");
+    localStorage.removeItem("creatorID")
+    setCreatorID("");
     navigate("/");
   };
 

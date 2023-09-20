@@ -17,25 +17,35 @@ import Logout from '../auth/logout/Logout';
 
 
 function HopSpotNav(args) {
-  console.log(args.sessionToken)
-   const sessionToken = args.sessionToken
+  
+   const sessiontoken = args.sessiontoken
    const setSessionToken = args.setSessionToken
+   const creatorID = args.creatorID
+   const setCreatorID = args.setCreatorID
 
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <div>
+    <>
       <Navbar {...args}>
         <NavbarBrand href="/">HopSpot</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
+            
+            
             <NavItem>
-              <NavLink href="/components/">Components</NavLink>
+              <NavLink href="/creator/drinks">Drinks</NavLink>
             </NavItem>
+
             <NavItem>
+              <NavLink href="/creator/promos">Promos</NavLink>
+            </NavItem>
+           
+            <NavItem>
+              
               <NavLink href="https://github.com/reactstrap/reactstrap">
                 GitHub
               </NavLink>
@@ -44,7 +54,7 @@ function HopSpotNav(args) {
               <DropdownToggle nav caret>
                 Options
               </DropdownToggle>
-              <DropdownMenu right>
+              <DropdownMenu end>
                 <DropdownItem>Option 1</DropdownItem>
                 <DropdownItem>Option 2</DropdownItem>
                 <DropdownItem divider />
@@ -52,12 +62,15 @@ function HopSpotNav(args) {
               
               </DropdownMenu>
             </UncontrolledDropdown>
-            {sessionToken !== "" ? (
+            <NavbarText>Simple Text</NavbarText>
+            {sessiontoken !== "" ? (
       <Logout
-       setSessionToken={setSessionToken} />
+       setSessionToken={setSessionToken}
+       setCreatorID={setCreatorID}
+        />
     ) : null}
           </Nav >
-          <NavbarText>Simple Text</NavbarText>
+         
         </Collapse>
         {/* <Nav justified
   >
@@ -84,7 +97,7 @@ function HopSpotNav(args) {
   </NavItem>
           </Nav> */}
       </Navbar>
-    </div>
+    </>
   );
 }
 
