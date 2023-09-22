@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   Accordion,
   AccordionBody,
@@ -14,6 +13,7 @@ import {
   Button,
 } from "reactstrap";
 import { baseURL } from "../../environments";
+import { useNavigate } from "react-router-dom";
 
 export default function DrinkAccordion({
   setSessionToken,
@@ -25,10 +25,10 @@ export default function DrinkAccordion({
   setCreatorID(localStorage.creatorID);
   console.log(creatorID);
   console.log(`currentPage, ${currentPage}`);
-  const navigate = useNavigate();
+  
 
   // let drinks = [];
-
+  const navigate = useNavigate()
   const [drinks, setDrinks] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -67,15 +67,8 @@ export default function DrinkAccordion({
   //! Display
   const displayDrinks = () => {
     console.log("DISPLAY DRINK", drinks);
-    return drinks.length === 0 ? (
-      <Button
-        //  onClick={navigate("/drink/create")}
-        color="dark"
-      >
-        Click Here To Create A Drink
-      </Button>
-    ) : (
-      drinks.map((drink) => (
+
+    return drinks.map((drink) => (
         <Accordion open={open} toggle={toggle}>
           <AccordionItem>
             <AccordionHeader targetId={drink._id}>{drink.name}</AccordionHeader>
@@ -103,6 +96,13 @@ export default function DrinkAccordion({
                     <p>Price Range: {drink.price}</p>
                   </CardText>
                   <Button
+                    color="info"
+                    
+                      onClick={() => navigate(`/promo/create?drink_id=${drink._id}`)}
+                  >
+                    Promote
+                  </Button>
+                  <Button
                     color="warning"
                     //   onClick={() => navigate(`/drink/update/${drink._id}`)}
                   >
@@ -119,66 +119,15 @@ export default function DrinkAccordion({
             </AccordionBody>
           </AccordionItem>
         </Accordion>
-      ))
-    );
+      ));
+    
   };
 
   useEffect(() => {
-
     fetchDrinks();
     console.log(drinks);
     // displayDrinks();
   }, [sessiontoken]);
 
-  
-
-  return (
-    <>
-      <h2>Drinks</h2>
-      {
-        // loading ? (
-        //     <p>Loading...</p>
-        // ) : (
-
-        // drinks &&
-        // drinks.length === 0 ? (
-        //   <Button
-        //     //  onClick={navigate("/drink/create")}
-        //     color="dark"
-        //   >
-        //     Click Here To Create A Drink
-        //   </Button>
-        // ) : (
-        //   drinks.map((drink) => (
-        //     <Accordion open={open} toggle={toggle}>
-        //       <AccordionItem>
-        //         key={drink._id}
-        //         <AccordionHeader targetId="1">{drink.name}</AccordionHeader>
-        //         <AccordionBody accordionId="1">
-        //           {drink.description}
-
-        //           <Button
-        //             color="warning"
-        //             //   onClick={() => navigate(`/drink/update/${drink._id}`)}
-        //           >
-        //             Edit
-        //           </Button>
-        //           <Button
-        //             //   onClick={() => deleteDrink(props.selectedDrink._id)}
-        //             color="danger"
-        //           >
-        //             Delete
-        //           </Button>
-        //         </AccordionBody>
-        //       </AccordionItem>
-        //     </Accordion>
-        //   ))
-        // )
-
-        //  )
-
-        drinks ? displayDrinks() : null
-      }
-    </>
-  );
+  return <>{drinks ? displayDrinks() : null}</>;
 }

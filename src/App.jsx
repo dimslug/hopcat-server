@@ -5,6 +5,8 @@ import { Routes, Route } from "react-router-dom";
 import Footer from "./components/footer/Footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CreatorIndex from "./components/creator/CreatorIndex";
+import DrinkCreate from "./components/createforms/DrinkCreate";
+import PromoCreate from "./components/createforms/PromoCreate";
 
 function App() {
   // Token use state set up
@@ -45,9 +47,9 @@ function App() {
       updateCreatorID={updateCreatorID}
         />} />
     
-    </Routes>
+    {/* </Routes>
     
-    <Routes>
+    <Routes> */}
     <Route path="/creator/frontpage" element={<CreatorIndex 
     setSessionToken={setSessionToken}
     sessiontoken={sessiontoken} 
@@ -56,8 +58,8 @@ function App() {
     />
     }
     />
-    </Routes>
-    <Routes>
+    {/* </Routes>
+    <Routes> */}
     <Route path="/creator/drinks" element={<CreatorIndex 
     setSessionToken={setSessionToken}
     sessiontoken={sessiontoken}
@@ -67,9 +69,29 @@ function App() {
     />
     }
     />
-    </Routes>
-    <Routes>
+    {/* </Routes>
+    <Routes> */}
     <Route path="/creator/promos" element={<CreatorIndex 
+    setSessionToken={setSessionToken}
+    sessiontoken={sessiontoken}
+    setCreatorID={setCreatorID} 
+    creatorID={creatorID}
+    currentPage={'promos'}
+    />
+    }
+    />
+    {/* </Routes>
+    <Routes> */}
+    <Route path="/drink/create" element={<DrinkCreate 
+    setSessionToken={setSessionToken}
+    sessiontoken={sessiontoken}
+    setCreatorID={setCreatorID} 
+    creatorID={creatorID}
+    currentPage={'drinks'}
+    />
+    }
+    />
+    <Route path="/promo/create" element={<PromoCreate 
     setSessionToken={setSessionToken}
     sessiontoken={sessiontoken}
     setCreatorID={setCreatorID} 
