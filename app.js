@@ -16,6 +16,7 @@ const {
   promoController,
   drinkController,
   creatorController,
+  notificationController,
 } = require("./controllers");
 const { db } = require("./db");
 
@@ -30,6 +31,7 @@ app.use("/drink", drinkController);
 app.use("/promo", promoController);
 app.use("/influencer", influencer);
 app.use("/calendar", calendar);
+app.use("/notifications", notificationController);
 
 //! Connection
 const server = async () => {
