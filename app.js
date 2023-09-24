@@ -10,6 +10,7 @@ const { db } = require('./db');
 const influencer = require('./controllers/influencer.controller');
 const validateSession = require("./middleware/validate-session");
 const jwt = require('jsonwebtoken')
+const calendar = require('./calendar.js');
 
 //! IMPORTS
 const { promoController, drinkController, creatorController } = require("./controllers");
@@ -25,6 +26,7 @@ app.use("/creator/", creatorController);
 app.use("/drink", drinkController);
 app.use("/promo", promoController);
 app.use('/influencer', influencer);
+app.use('/calendar', calendar);
 
 //! Connection
 const server = async() => {
