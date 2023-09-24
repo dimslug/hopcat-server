@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Review = require("../models/reviewModel");
-const authenticate = require("..authMiddleware");
+const authenticate = require("../Middleware/authMiddleware");
 
 router.post("/reviews", authenticate, async (req, res) => {
   try {

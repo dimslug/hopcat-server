@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { Drink, Creator } = require("../models");
-const validateSession = require("../middleware/validate-session");
+const validateSession = require("../Middleware/validate-session");
 const { error, success, incomplete } = require("../helpers");
 const log = console.log;
 

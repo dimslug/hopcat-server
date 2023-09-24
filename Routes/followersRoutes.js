@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const authenticate = require(".authMiddleware./middleware/authMiddleware");
+const authenticate = require("..Middleware/authMiddleware");
 const Influencer = require("../models/Influencer");
 const Creator = require("../models/Creator");
 
