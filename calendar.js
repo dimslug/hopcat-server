@@ -1,13 +1,12 @@
-// calendar.js
-const FullCalendar = require('fullcalendar');
+const FullCalendar = require("fullcalendar");
 
-app.get('/calendar', (req, res) => {
+app.get("/calendar", (req, res) => {
   //! Create a new calendar instance.
-  const calendar = FullCalendar.create('#calendar', {
+  const calendar = FullCalendar.create("#calendar", {
     firstDay: 5,
     events: [
       {
-        title: 'Event 1',
+        title: "Event 1",
         start: new Date(2023, 9, 22, 10, 0, 0),
         end: new Date(2023, 9, 22, 11, 0, 0),
       },
