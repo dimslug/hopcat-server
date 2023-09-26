@@ -1,4 +1,3 @@
-// !! Notification Model
 const NotificationModel = require("../models/notificationModel");
 
 class NotificationController {
