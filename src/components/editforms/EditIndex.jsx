@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
+import { useLocation } from 'react-router-dom';
 import HopSpotNav from "../nav/Nav";
-import { useNavigate } from "react-router-dom";
-import DrinkAccordion from "../accordions/DrinkAccordion";
-import PromoAccordion from "../accordions/PromoAccordion";
-import { Button } from "reactstrap";
+import DrinkEdit from "./DrinkEdit";
+import PromoEdit from "./PromoEdit";
 
-function CreatorDisplay(props) {
-  console.log(props);
-
-  const navigate = useNavigate();
-
+export default function EditIndex(props) {
   const sessiontoken = props.sessiontoken;
   const setSessionToken = props.setSessionToken;
-  const currentPage = props.currentPage;
   const creatorID = props.creatorID;
   const setCreatorID = props.setCreatorID;
+  const currentPage = props.currentPage
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const drinkID = queryParams.get('drink_id');
+  const promoID = queryParams.get('promo_id');
+
+  console.log(`currentPage : ${currentPage}`)
 
   return (
     <>
@@ -26,35 +27,28 @@ function CreatorDisplay(props) {
       />
       {currentPage === "drinks" ? (
         <>
-          <h2>Drinks</h2>
-          <Button onClick={() => navigate(`/creator/create?currentPage=${currentPage}`)} color="dark">
-            Click Here To Create A Drink
-          </Button>
-          <DrinkAccordion
+          <DrinkEdit
             setSessionToken={setSessionToken}
             sessiontoken={sessiontoken}
             setCreatorID={setCreatorID}
             creatorID={creatorID}
             currentPage={currentPage}
+            drinkID={drinkID}
           />
         </>
       ) : currentPage === "promos" ? (
         <>
-          <h2>Promos</h2>
-          <Button onClick={() => navigate(`/creator/create?currentPage=${currentPage}`)} color="dark">
-            Click Here To Create A Promo
-          </Button>
-          <PromoAccordion
+          <PromoEdit
             setSessionToken={setSessionToken}
             sessiontoken={sessiontoken}
             setCreatorID={setCreatorID}
             creatorID={creatorID}
             currentPage={currentPage}
+            drinkID={drinkID}
+            promoID={promoID}
           />
         </>
       ) : null}
     </>
   );
 }
-
-export default CreatorDisplay;

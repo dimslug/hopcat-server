@@ -3,7 +3,7 @@ import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { useNavigate } from 'react-router-dom';
 import FullButton from "../buttons/FullButton";
 import { baseURL } from "../../environments";
-import HopSpotNav from "../nav/Nav";
+
 
 export default function DrinkCreate(props) {
   const sessiontoken = props.sessiontoken;
@@ -98,12 +98,6 @@ export default function DrinkCreate(props) {
   return (
     <>
       {console.log(props)}
-      <HopSpotNav
-        setSessionToken={setSessionToken}
-        sessiontoken={sessiontoken}
-        setCreatorID={setCreatorID}
-        creatorID={creatorID}
-      />
       <h2>New Drink</h2>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
@@ -113,52 +107,52 @@ export default function DrinkCreate(props) {
         <FormGroup>
           <Label>Category 1</Label>
           <Input name="drinkCat1" innerRef={cat1Ref} type="select">
-            <option value={""}></option>
-            <option value={"Action"}>Action</option>
-            <option value={"Comedy"}>Comedy</option>
-            <option value={"Documentary"}>Documentary</option>
-            <option value={"Drama"}>Drama</option>
-            <option value={"Family"}>Family</option>
-            <option value={"Fantasy"}>Fantasy</option>
-            <option value={"Horror"}>Horror</option>
-            <option value={"Musical"}>Musical</option>
-            <option value={"Police Procedural"}>Police Procedural</option>
-            <option value={"Thriller"}>Thriller</option>
-            <option value={"Science Fiction"}>Science Fiction</option>
+          <option value={""}></option>
+            <option value={"Beer"}>Beer</option>
+            <option value={"Cocktail"}>Cocktail</option>
+            <option value={"High Ball"}>High Ball</option>
+            <option value={"Tumbler"}>Tumbler</option>
+            <option value={"Martini"}>Martini</option>
+            <option value={"IPA"}>IPA</option>
+            <option value={"Ale"}>Ale</option>
+            <option value={"Pilsner"}>Pilsner</option>
+            <option value={"ESB"}>ESB</option>
+            <option value={"Aperitif"}>Aperitif</option>
+            <option value={"Shot"}>Shot</option>
           </Input>
         </FormGroup>
         <FormGroup>
           <Label>Category 2</Label>
           <Input name="drinkCat2" innerRef={cat2Ref} type="select">
-            <option value={""}></option>
-            <option value={"Action"}>Action</option>
-            <option value={"Comedy"}>Comedy</option>
-            <option value={"Documentary"}>Documentary</option>
-            <option value={"Drama"}>Drama</option>
-            <option value={"Family"}>Family</option>
-            <option value={"Fantasy"}>Fantasy</option>
-            <option value={"Horror"}>Horror</option>
-            <option value={"Musical"}>Musical</option>
-            <option value={"Police Procedural"}>Police Procedural</option>
-            <option value={"Thriller"}>Thriller</option>
-            <option value={"Science Fiction"}>Science Fiction</option>
+          <option value={""}></option>
+            <option value={"Beer"}>Beer</option>
+            <option value={"Cocktail"}>Cocktail</option>
+            <option value={"High Ball"}>High Ball</option>
+            <option value={"Tumbler"}>Tumbler</option>
+            <option value={"Martini"}>Martini</option>
+            <option value={"IPA"}>IPA</option>
+            <option value={"Ale"}>Ale</option>
+            <option value={"Pilsner"}>Pilsner</option>
+            <option value={"ESB"}>ESB</option>
+            <option value={"Aperitif"}>Aperitif</option>
+            <option value={"Shot"}>Shot</option>
           </Input>
         </FormGroup>
         <FormGroup>
           <Label>Category 3</Label>
           <Input name="drinkCat3" innerRef={cat3Ref} type="select">
             <option value={""}></option>
-            <option value={"Action"}>Action</option>
-            <option value={"Comedy"}>Comedy</option>
-            <option value={"Documentary"}>Documentary</option>
-            <option value={"Drama"}>Drama</option>
-            <option value={"Family"}>Family</option>
-            <option value={"Fantasy"}>Fantasy</option>
-            <option value={"Horror"}>Horror</option>
-            <option value={"Musical"}>Musical</option>
-            <option value={"Police Procedural"}>Police Procedural</option>
-            <option value={"Thriller"}>Thriller</option>
-            <option value={"Science Fiction"}>Science Fiction</option>
+            <option value={"Beer"}>Beer</option>
+            <option value={"Cocktail"}>Cocktail</option>
+            <option value={"High Ball"}>High Ball</option>
+            <option value={"Tumbler"}>Tumbler</option>
+            <option value={"Martini"}>Martini</option>
+            <option value={"IPA"}>IPA</option>
+            <option value={"Ale"}>Ale</option>
+            <option value={"Pilsner"}>Pilsner</option>
+            <option value={"ESB"}>ESB</option>
+            <option value={"Aperitif"}>Aperitif</option>
+            <option value={"Shot"}>Shot</option>
           </Input>
         </FormGroup>
         <FormGroup>

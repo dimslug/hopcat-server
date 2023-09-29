@@ -1,3 +1,13 @@
 .App {
   text-align: center;
 }
+
+body {
+  background-image: radial-gradient(#00FFFF 20%, transparent 20%),
+     radial-gradient(#00FFFF 20%, transparent 20%);
+  background-color: #fafafa;
+  background-position: 0 0, 50px 50px;
+  background-size: 10px 10px;
+  height: 20px;
+  width: 100%;
+}

@@ -46,13 +46,13 @@ function HopSpotNav(args) {
            
             <NavItem>
               
-              <NavLink href="https://github.com/reactstrap/reactstrap">
+              {/* <NavLink href="https://github.com/reactstrap/reactstrap">
                 GitHub
-              </NavLink>
+              </NavLink> */}
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Options
+                Settings
               </DropdownToggle>
               <DropdownMenu end>
                 <DropdownItem>Option 1</DropdownItem>
@@ -62,7 +62,7 @@ function HopSpotNav(args) {
               
               </DropdownMenu>
             </UncontrolledDropdown>
-            <NavbarText>Simple Text</NavbarText>
+            {/* <NavbarText>Simple Text</NavbarText> */}
             {sessiontoken !== "" ? (
       <Logout
        setSessionToken={setSessionToken}

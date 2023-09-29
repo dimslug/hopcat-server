@@ -12,6 +12,7 @@ import {
   Container,
   Button,
 } from "reactstrap";
+import { useNavigate } from "react-router-dom";
 import { baseURL } from "../../environments";
 
 export default function DrinkAccordion({
@@ -30,7 +31,7 @@ export default function DrinkAccordion({
 
   const [promos, setPromos] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   const [open, setOpen] = useState("1");
   const toggle = (id) => {
     if (open === id) {
@@ -83,19 +84,25 @@ export default function DrinkAccordion({
       Card title
     </CardTitle> */}
                   <CardSubtitle className="mb-2 text-muted" tag="h6">
-                    <p>{promo.drinkID}</p>
+                    <p>Promo Active Between Start and End date Below</p>
                   </CardSubtitle>
                   <CardText>
                     <ul>
-                      <li>{promo.startDate}</li>
-                      <li>{promo.endDate}</li>
+                      <li>Start Date: {promo.startDate}</li>
+                      <li>End Date: {promo.endDate}</li>
                     
                     </ul>
                
                   </CardText>
-                  <Button
+                  {/* <Button
                     color="warning"
                     //   onClick={() => navigate(`/promo/update/${promo._id}`)}
+                  >
+                    Edit
+                  </Button> */}
+                  <Button
+                    color="warning"
+                      onClick={() => navigate(`/creator/edit?drink_id=${promo.drinkID}&currentPage=promos&promo_id=${promo._id}`)}
                   >
                     Edit
                   </Button>

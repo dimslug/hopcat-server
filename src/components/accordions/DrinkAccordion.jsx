@@ -97,14 +97,14 @@ export default function DrinkAccordion({
                   </CardText>
                   <Button
                     color="info"
-                    
-                      onClick={() => navigate(`/promo/create?drink_id=${drink._id}`)}
+                      currentPage={'promos'}
+                      onClick={() => navigate(`/creator/create?drink_id=${drink._id}&currentPage=promos`)}
                   >
                     Promote
                   </Button>
                   <Button
                     color="warning"
-                    //   onClick={() => navigate(`/drink/update/${drink._id}`)}
+                      onClick={() => navigate(`/creator/edit?drink_id=${drink._id}&currentPage=drinks`)}
                   >
                     Edit
                   </Button>
