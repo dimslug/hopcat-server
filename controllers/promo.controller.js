@@ -37,7 +37,7 @@ router.post('/:drinkID/create', validateSession, async (req, res) => {
 })
 
 // !! Get All by creatorID -- GET
-router.get("/:creatorID/", async (req, res) => {
+router.get("/:creatorID/", validateSession, async (req, res) => {
     try {
       const creatorID = req.params.creatorID;
       const getAllPromos = await Promo.find({ creatorID: creatorID });
@@ -47,6 +47,20 @@ router.get("/:creatorID/", async (req, res) => {
       error(res, err);
     }
   });
+
+  // !! Get One by drinkID -- GET
+router.get("/getone/:promoID/", validateSession, async (req, res) => {
+  try {
+    log(req.params.promoID)
+    const promoID = req.params.promoID;
+    const getPromo = await Promo.find({ _id: promoID });
+
+    getPromo ? success(res, getPromo) : incomplete(res);
+  } catch (err) {
+    error(res, err);
+  }
+});
+
 
 // !! Update -- PATCH
 router.patch("/edit/:promoID", validateSession, async (req, res) => {
