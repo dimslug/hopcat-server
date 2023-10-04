@@ -94,5 +94,21 @@ router.delete("/delete/:promoID", validateSession, async (req, res) => {
     error(res, err);
   }
 });
+//!Calender
+// Create a listener for new promos.
+app.post("/promos", async (req, res) => {
+  // Create the new promo.
+  const promo = new Promo(req.body);
+
+  // Save the new promo to the database.
+  await promo.save();
+
+  // Send a notification to the client.
+  await axios.post("/calendar/update", {
+    promo: promo,
+  });
+
+  res.sendStatus(201);
+});
 
 module.exports = router;
