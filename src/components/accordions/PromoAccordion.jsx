@@ -25,7 +25,6 @@ export default function DrinkAccordion({
   setCreatorID(localStorage.creatorID);
   console.log(creatorID);
   console.log(`currentPage, ${currentPage}`);
-  
 
   // let drinks = [];
 
@@ -68,57 +67,82 @@ export default function DrinkAccordion({
   const displayPromos = () => {
     console.log("DISPLAY Promo", promos);
 
-    return promos.map((promo) => (
-        <Accordion open={open} toggle={toggle}>
-          <AccordionItem>
-            <AccordionHeader targetId={promo._id}>{promo.promoText}</AccordionHeader>
-            <AccordionBody accordionId={promo._id}>
-              <Card
-                style={{
-                  width: "18rem",
-                }}
-              >
-                <img alt="Sample" src="https://picsum.photos/300/200" />
-                <CardBody>
-                  {/* <CardTitle tag="h5">
-      Card title
-    </CardTitle> */}
-                  <CardSubtitle className="mb-2 text-muted" tag="h6">
-                    <p>Promo Active Between Start and End date Below</p>
-                  </CardSubtitle>
-                  <CardText>
-                    <ul>
-                      <li>Start Date: {promo.startDate}</li>
-                      <li>End Date: {promo.endDate}</li>
-                    
-                    </ul>
-               
-                  </CardText>
-                  {/* <Button
-                    color="warning"
-                    //   onClick={() => navigate(`/promo/update/${promo._id}`)}
+    return (
+      <div>
+        {promos.map((promo) => {
+          const startDateFormatter = new Date(promo.startDate);
+          const startDateFomatted = startDateFormatter.toLocaleDateString(
+            "en-US",
+            {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            }
+          );
+          const endDateFormatter = new Date(promo.endDate);
+          const endDateFomatted = endDateFormatter.toLocaleDateString("en-US", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          });
+
+          return (
+            <Accordion open={open} toggle={toggle}>
+              <AccordionItem>
+                <AccordionHeader targetId={promo._id}>
+                  {promo.promoText}
+                </AccordionHeader>
+                <AccordionBody accordionId={promo._id}>
+                  <Card
+                    style={{
+                      width: "18rem",
+                    }}
                   >
-                    Edit
-                  </Button> */}
-                  <Button
-                    color="warning"
-                      onClick={() => navigate(`/creator/edit?drink_id=${promo.drinkID}&currentPage=promos&promo_id=${promo._id}`)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    //   onClick={() => deletepromo(props.selectedpromo._id)}
-                    color="danger"
-                  >
-                    Delete
-                  </Button>
-                </CardBody>
-              </Card>
-            </AccordionBody>
-          </AccordionItem>
-        </Accordion>
-      ));
-    
+                    <img alt="Sample" src="https://picsum.photos/300/200" />
+                    <CardBody>
+                      {/* <CardTitle tag="h5">
+    Card title
+  </CardTitle> */}
+                      <CardSubtitle className="mb-2 text-muted" tag="h6">
+                        <p>Promo Active Between Start and End date Below</p>
+                      </CardSubtitle>
+                      <CardText>
+                        <ul>
+                          <li>Start Date: {startDateFomatted}</li>
+                          <li>End Date: {endDateFomatted}</li>
+                        </ul>
+                      </CardText>
+                      {/* <Button
+                  color="warning"
+                  //   onClick={() => navigate(`/promo/update/${promo._id}`)}
+                >
+                  Edit
+                </Button> */}
+                      <Button
+                        color="warning"
+                        onClick={() =>
+                          navigate(
+                            `/creator/edit?drink_id=${promo.drinkID}&currentPage=promos&promo_id=${promo._id}`
+                          )
+                        }
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        //   onClick={() => deletepromo(props.selectedpromo._id)}
+                        color="danger"
+                      >
+                        Delete
+                      </Button>
+                    </CardBody>
+                  </Card>
+                </AccordionBody>
+              </AccordionItem>
+            </Accordion>
+          );
+        })}
+      </div>
+    );
   };
 
   useEffect(() => {

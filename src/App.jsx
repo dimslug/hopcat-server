@@ -1,9 +1,11 @@
-import "./App.css";
+
+import "tw-elements-react/dist/css/tw-elements-react.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./index.css";
 import Auth from "./components/auth/Auth";
 import { useEffect, useState  } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Footer from "./components/footer/Footer";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import CreatorIndex from "./components/creator/CreatorIndex";
 // import DrinkCreate from "./components/createforms/DrinkCreate";
 // import PromoCreate from "./components/createforms/PromoCreate";

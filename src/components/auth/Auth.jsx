@@ -40,7 +40,9 @@ function Auth(props) {
            
             <Container>
                 {displayForm()}
-                <Button onClick={swapForm} color='dark'>{button}</Button>
+                <Button onClick={swapForm}
+                color='dark' 
+              >{button}</Button>
             </Container>
             
         </>

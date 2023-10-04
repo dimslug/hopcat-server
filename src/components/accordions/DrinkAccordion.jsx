@@ -73,7 +73,7 @@ export default function DrinkAccordion({
           <AccordionItem>
             <AccordionHeader targetId={drink._id}>{drink.name}</AccordionHeader>
             <AccordionBody accordionId={drink._id}>
-              <Card
+              <Card className="card"
                 style={{
                   width: "18rem",
                 }}

@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
+import '../../../App.css'
 
 function Logout({ setSessionToken, setCreatorID }) {
 
@@ -24,7 +25,11 @@ function Logout({ setSessionToken, setCreatorID }) {
 
   return (
     <>
-      <Button color="danger" outline style={style} onClick= {signout}>
+      <Button class="custom-button" 
+      color="danger" 
+      // outline style={style} 
+      
+      onClick= {signout}>
         Signout
       </Button>
     </>

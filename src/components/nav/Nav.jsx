@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../../index.css'
 import {
   Collapse,
   Navbar,
@@ -29,11 +30,13 @@ function HopSpotNav(args) {
 
   return (
     <>
-      <Navbar {...args}>
-        <NavbarBrand href="/">HopSpot</NavbarBrand>
-        <NavbarToggler onClick={toggle} />
+      <Navbar className="navbar-custom navbarcustom" {...args}>
+        <NavbarBrand className="navbarcustom navbar-brand" href="/">HopSpot</NavbarBrand>
+        <NavbarToggler className="navbarcustom navbar-toggler" onClick={toggle}>
+        <div className='navbar-toggler-icon'></div>
+        </NavbarToggler>
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="me-auto" navbar>
+          <Nav className="me-auto custom-collapse" navbar>
             
             
             <NavItem>
