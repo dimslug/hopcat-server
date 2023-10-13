@@ -22,17 +22,10 @@ export default function DrinkAccordion({
   creatorID,
   currentPage,
 }) {
+
   setCreatorID(localStorage.creatorID);
-  console.log(creatorID);
-  console.log(`currentPage, ${currentPage}`);
-  
 
-  // let drinks = [];
   const navigate = useNavigate()
-  const [drinks, setDrinks] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const [open, setOpen] = useState("1");
   const toggle = (id) => {
     if (open === id) {
       setOpen();
@@ -40,6 +33,14 @@ export default function DrinkAccordion({
       setOpen(id);
     }
   };
+
+  //! UseStates
+ 
+  const [drinks, setDrinks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState("1");
+  
+  
 
   //! Fetch Drinks
   const fetchDrinks = async () => {
@@ -64,6 +65,28 @@ export default function DrinkAccordion({
     }
   };
 
+  //! Delete Function
+  async function deleteDrink(id) {
+    const url = `${baseURL}/drink/delete/${id}`;
+
+    let requestOption = {
+      headers: new Headers({
+        Authorization: sessiontoken,
+      }),
+      method: "DELETE",
+    };
+    try {
+      let res = await fetch(url, requestOption);
+      let data = await res.json();
+
+      if (data) {
+        fetchDrinks();
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
   //! Display
   const displayDrinks = () => {
     console.log("DISPLAY DRINK", drinks);
@@ -80,9 +103,6 @@ export default function DrinkAccordion({
               >
                 <img alt="Sample" src="https://picsum.photos/300/200" />
                 <CardBody>
-                  {/* <CardTitle tag="h5">
-      Card title
-    </CardTitle> */}
                   <CardSubtitle className="mb-2 text-muted" tag="h6">
                     <p>{drink.description}</p>
                   </CardSubtitle>
@@ -109,7 +129,7 @@ export default function DrinkAccordion({
                     Edit
                   </Button>
                   <Button
-                    //   onClick={() => deleteDrink(props.selectedDrink._id)}
+                      onClick={() => deleteDrink(drink._id)}
                     color="danger"
                   >
                     Delete

@@ -26,12 +26,8 @@ export default function DrinkAccordion({
   console.log(creatorID);
   console.log(`currentPage, ${currentPage}`);
 
-  // let drinks = [];
-
-  const [promos, setPromos] = useState([]);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const [open, setOpen] = useState("1");
+
   const toggle = (id) => {
     if (open === id) {
       setOpen();
@@ -39,6 +35,11 @@ export default function DrinkAccordion({
       setOpen(id);
     }
   };
+
+  //! UseStates
+  const [promos, setPromos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState("1");
 
   //! Fetch Promos
   const fetchPromos = async () => {
@@ -52,16 +53,35 @@ export default function DrinkAccordion({
     try {
       const res = await fetch(url, requestOption);
       const data = await res.json();
-      // promos = data.results;
       setPromos(data.results);
-      // console.log(data);
-      // console.log(promos);
       setLoading(false);
     } catch (err) {
       console.error(err.message);
       setLoading(false);
     }
   };
+
+  //! Delete Function
+  async function deletePromo(id) {
+    const url = `${baseURL}/promo/delete/${id}`;
+
+    let requestOption = {
+      headers: new Headers({
+        Authorization: sessiontoken,
+      }),
+      method: "DELETE",
+    };
+    try {
+      let res = await fetch(url, requestOption);
+      let data = await res.json();
+
+      if (data) {
+        fetchPromos();
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
 
   //! Display
   const displayPromos = () => {
@@ -100,9 +120,6 @@ export default function DrinkAccordion({
                   >
                     <img alt="Sample" src="https://picsum.photos/300/200" />
                     <CardBody>
-                      {/* <CardTitle tag="h5">
-    Card title
-  </CardTitle> */}
                       <CardSubtitle className="mb-2 text-muted" tag="h6">
                         <p>Promo Active Between Start and End date Below</p>
                       </CardSubtitle>
@@ -112,12 +129,6 @@ export default function DrinkAccordion({
                           <li>End Date: {endDateFomatted}</li>
                         </ul>
                       </CardText>
-                      {/* <Button
-                  color="warning"
-                  //   onClick={() => navigate(`/promo/update/${promo._id}`)}
-                >
-                  Edit
-                </Button> */}
                       <Button
                         color="warning"
                         onClick={() =>
@@ -129,7 +140,7 @@ export default function DrinkAccordion({
                         Edit
                       </Button>
                       <Button
-                        //   onClick={() => deletepromo(props.selectedpromo._id)}
+                        onClick={() => deletePromo(promo._id)}
                         color="danger"
                       >
                         Delete

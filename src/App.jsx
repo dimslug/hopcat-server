@@ -7,6 +7,7 @@ import { useEffect, useState  } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Footer from "./components/footer/Footer";
 import CreatorIndex from "./components/creator/CreatorIndex";
+
 // import DrinkCreate from "./components/createforms/DrinkCreate";
 // import PromoCreate from "./components/createforms/PromoCreate";
 // import DrinkEdit from "./components/editforms/DrinkEdit";
