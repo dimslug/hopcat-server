@@ -12,18 +12,51 @@ export default function PromoEdit(props) {
   const setCreatorID = props.setCreatorID;
   const drinkID = props.drinkID;
   const promoID = props.promoID;
-  const [promoToEdit, setPromoToEdit] = useState([]);
 
-  const [loading, setLoading] = useState(true);
-
-  console.log(`promoID : ${promoID}`);
-console.log(loading)
   const navigate = useNavigate();
+  
+  console.log(`promoID : ${promoID}`);
+  
+  //! useStates
+  const [loading, setLoading] = useState(true);
+  const [promoToEdit, setPromoToEdit] = useState([]);
+  const [startDateFormatted, setStartDateFormatted] = useState("");
+  const [endDateFormatted, setEndDateFormatted] = useState("");
+
+  //! useEffects
+  useEffect(() => {
+    fetchPromo();
+  }, [sessiontoken, promoID]);
+
+  useEffect(() => {
+    console.log(promoToEdit)
+    if (promoToEdit.length > 0) {
+      const startDateFormatter = new Date(promoToEdit[0].startDate);
+      setStartDateFormatted(startDateFormatter.toLocaleDateString(
+        "en-US",
+        {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        }
+      ));
+      const endDateFormatter = new Date(promoToEdit[0].endDate);
+      setEndDateFormatted(endDateFormatter.toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }));
+ 
+    }
+    setLoading(false);
+  }, [promoToEdit])
+
+
 
   //! Fetch Promo
   const fetchPromo = async () => {
     console.log(`promoID : ${promoID}`);
-console.log(`sessiontoken : ${sessiontoken}`);
+    console.log(`sessiontoken : ${sessiontoken}`);
     const url = `${baseURL}/promo/getone/${promoID}`;
     const requestOption = {
       method: "GET",
@@ -41,17 +74,18 @@ console.log(`sessiontoken : ${sessiontoken}`);
       console.error(err.message);
     } finally {
 
-      setLoading(false);
+      
     }
   };
 
-  useEffect(() => {
-    fetchPromo();
-  }, [sessiontoken, promoID]);
-
+ 
 
   //! Display Edit Form
   const displayEditForm = () => {
+
+   console.log(startDateFormatted)
+   console.log(endDateFormatted)
+   
     return (
       <Form onSubmit={handleSubmit}>
         <FormGroup floating>
@@ -63,13 +97,13 @@ console.log(`sessiontoken : ${sessiontoken}`);
          
           <Input id="startDate" name="startDate" innerRef={startDateRef} type="date">
           </Input>
-          <Label for="startDate">Current Start Date: {promoToEdit[0].startDate}</Label>
+          <Label for="startDate">Current Start Date: {startDateFormatted}</Label>
         </FormGroup>
         <FormGroup floating>
          
           <Input id="endDate" name="endDate" innerRef={endDateRef} type="date">
           </Input>
-          <Label for="endDate">Current End Date: {promoToEdit[0].endDate}</Label>
+          <Label for="endDate">Current End Date: {endDateFormatted}</Label>
         </FormGroup>
        
         <FullButton>

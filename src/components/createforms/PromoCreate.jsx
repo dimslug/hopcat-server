@@ -16,19 +16,53 @@ export default function PromoCreate(props) {
     const drinkID = queryParams.get('drink_id');
     const navigate = useNavigate();
 
-console.log(sessiontoken)
-console.log(creatorID)
+console.log(`promo create drinkID = ${drinkID}`)
 
 
    //! UseStates
-   const [selectedDrinkName, setSelectedDrinkName] = useState();
+   const [drink, setDrink] = useState("")
+   const [drinks, setDrinks] = useState("")
    const [loading, setLoading] = useState(true);
-   const [selectedDrink, setSelectedDrink] = useState()
-   const [drinks, setDrinks] = useState()
+   const [selectedDrink, setSelectedDrink] = useState("")
+   const [selectedDrinkID, setSelectedDrinkID] = useState("");
+   const [selectedDrinkName, setSelectedDrinkName] = useState("");
    const [selection, setSelection] = useState(false);
 
+   //! UseEffects
+
+   useEffect(() => {
+    if (!drinkID) {
+      console.log('fetching creators drinks')
+      fetchDrinks();
+    }
+    
+  }, []);
+
+  useEffect(() => {
+    if (drinkID) {
+      console.log(`fetching: ${drinkID}`)
+      fetchDrink();
+    }
+  }, [drinkID]);
+
+  
+useEffect(() => {
+  if (selectedDrinkID) {
+    console.log(`fetching slected drink: ${selectedDrinkID}`)
+    fetchSelectedDrink(selectedDrinkID._id);
+    
+  }
+}, [selectedDrinkID]);
+
+useEffect (() => {
+  if (selectedDrink) {
+  console.log(`Inside setSelection useEffect, selection = ${selection}`)
+  setSelection(true)
+  }
+}, [selectedDrink])
 
 
+//! Fetches
   //! Fetch Drink
   const fetchDrink = async () => {
   const url = `${baseURL}/drink/getone/${drinkID}`;
@@ -41,22 +75,20 @@ console.log(creatorID)
   try {
     const res = await fetch(url, requestOption);
     const data = await res.json();
-   setSelectedDrink(data.results)
-    // setSelectedDrinkName(selectedDrink[0].name)
+    setSelectedDrink(data.results)
+    console.log(`Inside Fetch Drink: ${selectedDrink}`)
+    setLoading(false)
   
-   setLoading(false)
-   console.log(`Inside Fetch Drink: ${selectedDrink[0].name}`)
   } catch (err) {
     console.error(err.message);
   
-    
-    
   }
+  
 };
 
 //! Fetch Selected Drink
-const fetchSelectedDrink = async (drinkID) => {
-  const url = `${baseURL}/drink/getone/${drinkID}`;
+const fetchSelectedDrink = async (selectedDrinkID) => {
+  const url = `${baseURL}/drink/getone/${selectedDrinkID}`;
   const requestOption = {
     method: "GET",
     headers: new Headers({
@@ -67,18 +99,14 @@ const fetchSelectedDrink = async (drinkID) => {
     const res = await fetch(url, requestOption);
     const data = await res.json();
    setSelectedDrink(data.results)
-    // setSelectedDrinkName(selectedDrink[0].name)
-  
-   setLoading(false)
-   console.log(`Inside Fetch Drink: ${selectedDrink[0].name}`)
+    console.log(`Inside Fetch Selected Drink: ${selectedDrink}`)
+    setLoading(false)
+
   } catch (err) {
     console.error(err.message);
   
-    
-    
   }
 };
-
 
 //! Fetch Drinks
 const fetchDrinks = async () => {
@@ -92,26 +120,28 @@ const fetchDrinks = async () => {
   try {
     const res = await fetch(url, requestOption);
     const data = await res.json();
-    // drinks = data.results;
     setDrinks(data.results);
-    // console.log(data);
-    console.log(drinks);
-    setLoading(false);
+    console.log(`Inside Fetch Drinks= ${drinks}`);
+   
   } catch (err) {
     console.error(err.message);
    
   }
 };
 
-useEffect(() => {
-  fetchDrink();
-  fetchDrinks();
-}, [sessiontoken, drinkID]);
-
 //! Display Promo Create Form
 const displayPromoCreateForm = () => {
   console.log(selectedDrink)
-  if (selectedDrink && selectedDrink[0] && selectedDrink[0].name) {
+  console.log(`Inside Display Promo loading = ${loading}`)
+  if (
+    !loading &&
+    selectedDrink 
+    && 
+    selectedDrink[0] 
+    && 
+    selectedDrink[0].name
+    ) 
+    {
     return (
    
       <Form onSubmit={handleSubmit}>
@@ -156,13 +186,12 @@ const displayPromoCreateForm = () => {
 //! Drink Chooser
 const drinkChooser = () => {
 const handleDrinkChoice = (event) => {
-  const selectedName = event.target.value;
-  setSelectedDrinkName(selectedName);
-
-const selectedDrink = drinks.find((drink) => drink.name === selectedName)
-setSelectedDrink(selectedDrink)
-setSelection(true)
-console.log(selectedDrink)
+  const choice = event.target.value;
+  setSelectedDrinkName(choice);
+  const selectedDrinkID = drinks.find((drink) => drink.name === choice)
+  setSelectedDrinkID(selectedDrinkID)
+  // setSelection(true)
+  console.log(`Inside Drink Chooser selectedDrink= ${drink}`)
 }
 return (
 
@@ -194,29 +223,26 @@ return (
 
 }
 
-useEffect(() => {
-  if (selectedDrink) {
-    setSelection(true);
-    fetchSelectedDrink(selectedDrink._id);
-  }
-}, [selectedDrink]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    const selectedDrinkIDValue = selectedDrinkID ? selectedDrinkID._id : null;
+    const effectiveDrinkID = drinkID === null ? selectedDrinkIDValue : drinkID;
+  
+    console.log(effectiveDrinkID);
+
     const promoText = promoTextRef.current.value;
     const startDate = startDateRef.current.value;
     const endDate = endDateRef.current.value
 
     let body = JSON.stringify({
       creatorID,
-      drinkID,
+      drinkID: effectiveDrinkID,
       promoText,
       startDate,
       endDate
     });
 
-    let url = `${baseURL}/promo/${drinkID}/create`;
+    let url = `${baseURL}/promo/${effectiveDrinkID}/create`;
 
     let headers = new Headers();
     headers.append(`Content-Type`, `application/json`);
@@ -244,13 +270,9 @@ useEffect(() => {
   const startDateRef = useRef();
   const endDateRef = useRef();
 
-  // "use strict";
-
-
-
   return (
     <>
-    {/* {console.log(selectedDrink[0].name)} */}
+    {console.log(selection)}
      <h2>New Promo</h2>
       {selection ? displayPromoCreateForm() : drinkChooser()}
     </>
