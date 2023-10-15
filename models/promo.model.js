@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const PromoSchema = new mongoose.Schema({
   // promoID: {
   //     type: mongoose.Types.ObjectId,
