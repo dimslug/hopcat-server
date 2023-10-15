@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Table, Tooltip, Button, Collapse } from 'reactstrap'
 
 function UpcomingPromos() {
@@ -17,7 +17,36 @@ function UpcomingPromos() {
     const onExiting = () => setStatus(false);
     const onExited = () => setStatus(false);
 
-    
+    // fetch promo data from backend and map over it to populate table
+
+    const promoData = [];
+
+    const fetchPromos = async () => {
+        const url = 'http://localhost:4010/promo/upcoming';
+
+        const requestOptions = {
+            method: 'GET',
+            headers: new Headers({
+                "Authorization": `Bearer ${localStorage.getItem('token')}`,                
+            })
+        }
+
+        try {
+            const res = await fetch(url, requestOptions);
+            const data = await res.json();
+            console.log(data)
+            promoData.push(data)
+        } catch (err) {
+            console.log(err.message)
+        }
+
+    };
+
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            fetchPromos();
+        }
+    }, [localStorage.getItem('token')])
 
 
 
