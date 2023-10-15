@@ -39,6 +39,11 @@ endDate: {
 
 
 },
+promoPlace: {
+    type: Object,
+    required: true
+
+},
 
 
 

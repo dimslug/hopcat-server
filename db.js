@@ -10,7 +10,7 @@ const db = async () => {
         await mongoose.connect(`${connection}/${collection}`);
 
         console.log(
-            `Database conencted: ${connection}/${collection}`
+            `Database connected: ${connection}/${collection}`
             );
         
     } catch (err) {

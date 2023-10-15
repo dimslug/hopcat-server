@@ -15,6 +15,7 @@ router.post('/:drinkID/create', validateSession, async (req, res) => {
         const promoText = req.body.promoText;
         const startDate = req.body.startDate;
         const endDate = req.body.endDate;
+        const promoPlace = req.body.promoPlace;
 
         const promo = new Promo({
             creatorID: creatorID,
@@ -23,6 +24,7 @@ router.post('/:drinkID/create', validateSession, async (req, res) => {
             promoText: promoText,
             startDate: startDate,
             endDate: endDate,
+            promoPlace: promoPlace,
           
         });
 
@@ -71,9 +73,11 @@ router.patch("/edit/:promoID", validateSession, async (req, res) => {
         const newPromoText = req.body.promoText;
         const newStartDate = req.body.startDate;
         const newEndDate = req.body.endDate;
+        const newPromoPlace = req.body.promoPlace
+
         const updatedInfo = {
             // influencerID: newInfluencerID, 
-            promoText: newPromoText, startDate: newStartDate, endDate: newEndDate,
+            promoText: newPromoText, startDate: newStartDate, endDate: newEndDate, promoPlace: newPromoPlace
         }
         const updatedPromo = await Promo.findOneAndUpdate(
             { _id: promoID, creatorID: creatorID }, updatedInfo, { new: true }
