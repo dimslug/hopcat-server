@@ -13,7 +13,7 @@ const jwt = require('jsonwebtoken')
 
 //! IMPORTS
 const { promoController, drinkController, creatorController } = require("./controllers");
-const { db } = require('./db');
+
 
 //! MIDDLEWARE
 //* data handling
