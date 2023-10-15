@@ -17,12 +17,12 @@ import {
 import Logout from '../auth/logout/Logout';
 
 
-function HopSpotNav(args) {
+function HopSpotNav(props) {
   
-   const sessiontoken = args.sessiontoken
-   const setSessionToken = args.setSessionToken
-   const creatorID = args.creatorID
-   const setCreatorID = args.setCreatorID
+   const sessiontoken = props.sessiontoken
+   const setSessionToken = props.setSessionToken
+   const creatorID = props.creatorID
+   const setCreatorID = props.setCreatorID
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,25 +30,20 @@ function HopSpotNav(args) {
 
   return (
     <>
-      <Navbar className="navbar-custom navbarcustom" {...args}>
+      <Navbar className="navbar-custom navbarcustom" {...props}>
         <NavbarBrand className="navbarcustom navbar-brand" href="/">HopSpot</NavbarBrand>
         <NavbarToggler className="navbarcustom navbar-toggler" onClick={toggle}>
         <div className='navbar-toggler-icon'></div>
         </NavbarToggler>
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto custom-collapse" navbar>
-            
-            
             <NavItem>
               <NavLink href="/creator/drinks">Drinks</NavLink>
             </NavItem>
-
             <NavItem>
               <NavLink href="/creator/promos">Promos</NavLink>
             </NavItem>
-           
             <NavItem>
-              
               {/* <NavLink href="https://github.com/reactstrap/reactstrap">
                 GitHub
               </NavLink> */}
@@ -62,7 +57,6 @@ function HopSpotNav(args) {
                 <DropdownItem>Option 2</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>Reset</DropdownItem>
-              
               </DropdownMenu>
             </UncontrolledDropdown>
             {/* <NavbarText>Simple Text</NavbarText> */}
@@ -72,33 +66,8 @@ function HopSpotNav(args) {
        setCreatorID={setCreatorID}
         />
     ) : null}
-          </Nav >
-         
+          </Nav >        
         </Collapse>
-        {/* <Nav justified
-  >
-          <NavItem>
-    <NavLink
-      active
-      href="#"
-    >
-      Link
-    </NavLink>
-  </NavItem>
-  <NavItem>
-    <NavLink href="#">
-      Another Link
-    </NavLink>
-  </NavItem>
-  <NavItem>
-    <NavLink
-      disabled
-      href="#"
-    >
-      Disabled Link
-    </NavLink>
-  </NavItem>
-          </Nav> */}
       </Navbar>
     </>
   );

@@ -53,12 +53,15 @@ export default function DrinkEdit(props) {
       console.log(`Inside Fetch Drink: ${selectedPrice}`)
       setLoading(false);
       console.log(drinkToEdit[0].price)
-      !loading ? setSelectedPrice(drinkToEdit[0].price) : null
+      if (!loading) {
+        setSelectedPrice(drinkToEdit[0].price)
+      }
     } catch (err) {
       console.error(err.message);
     // } finally {
      
     }
+    
   };
 
   useEffect(() => {

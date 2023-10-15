@@ -3,6 +3,7 @@ import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { useNavigate, useLocation } from 'react-router-dom';
 import FullButton from "../buttons/FullButton";
 import { baseURL } from "../../environments";
+import PlaceComponent from '../placecomponent/PlaceComponent' 
 
 
 export default function PromoCreate(props) {
@@ -14,12 +15,14 @@ export default function PromoCreate(props) {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const drinkID = queryParams.get('drink_id');
+  
+
     const navigate = useNavigate();
 
 console.log(`promo create drinkID = ${drinkID}`)
 
 
-   //! UseStates
+   //! useStates
    const [drink, setDrink] = useState("")
    const [drinks, setDrinks] = useState("")
    const [loading, setLoading] = useState(true);
@@ -27,8 +30,14 @@ console.log(`promo create drinkID = ${drinkID}`)
    const [selectedDrinkID, setSelectedDrinkID] = useState("");
    const [selectedDrinkName, setSelectedDrinkName] = useState("");
    const [selection, setSelection] = useState(false);
+   const [selectedAddress, setSelectedAddress] = useState({
+    formattedAddress: '',
+    latitude: null,
+    longitude: null
+   })
+  
 
-   //! UseEffects
+   //! useEffects
 
    useEffect(() => {
     if (!drinkID) {
@@ -61,6 +70,26 @@ useEffect (() => {
   }
 }, [selectedDrink])
 
+// useEffect(() => {
+//   if (PlaceComponent.place){
+//   setSelectedAddress({
+//     formattedAddress: PlaceComponent.place.formatted_address,
+//     latitude: PlaceComponent.place.geometry.location.lat(),
+//     longitude: PlaceComponent.place.geometry.location.lng()
+//   })}
+// }, [ PlaceComponent.place ])
+
+//! useRefs
+const promoTextRef = useRef();
+const startDateRef = useRef();
+const endDateRef = useRef();
+const promoPlaceRef = useRef();
+
+
+//! PlaceComponent Address Callback
+const handleAddressSelected = (address) => {
+  setSelectedAddress(address)
+}
 
 //! Fetches
   //! Fetch Drink
@@ -170,6 +199,17 @@ const displayPromoCreateForm = () => {
             innerRef={endDateRef}
             type="date"
           ></Input>
+           <Label>Promo Location</Label>
+           {/* <Input> */}
+          
+          <PlaceComponent onAddressSelected={handleAddressSelected} />
+          {/* name="promoPlace"
+          innerRef={promoPlaceRef}
+          type="text"
+         
+         
+           {/* </Input> */}
+            
         </FormGroup>
         <FullButton>
           <Button color="success">Add Promo</Button>
@@ -190,7 +230,6 @@ const handleDrinkChoice = (event) => {
   setSelectedDrinkName(choice);
   const selectedDrinkID = drinks.find((drink) => drink.name === choice)
   setSelectedDrinkID(selectedDrinkID)
-  // setSelection(true)
   console.log(`Inside Drink Chooser selectedDrink= ${drink}`)
 }
 return (
@@ -228,19 +267,26 @@ return (
     const selectedDrinkIDValue = selectedDrinkID ? selectedDrinkID._id : null;
     const effectiveDrinkID = drinkID === null ? selectedDrinkIDValue : drinkID;
   
-    console.log(effectiveDrinkID);
+    console.log(selectedAddress);
+    
 
     const promoText = promoTextRef.current.value;
     const startDate = startDateRef.current.value;
-    const endDate = endDateRef.current.value
+    const endDate = endDateRef.current.value;
+    const promoPlace = selectedAddress;
+
+    console.log(promoPlace)
 
     let body = JSON.stringify({
       creatorID,
       drinkID: effectiveDrinkID,
       promoText,
       startDate,
-      endDate
+      endDate,
+      promoPlace
     });
+
+    console.log(body)
 
     let url = `${baseURL}/promo/${effectiveDrinkID}/create`;
 
@@ -266,9 +312,7 @@ return (
     }
   };
 
-  const promoTextRef = useRef();
-  const startDateRef = useRef();
-  const endDateRef = useRef();
+
 
   return (
     <>

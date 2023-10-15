@@ -4,20 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import FullButton from '../../buttons/FullButton';
 import { baseURL } from '../../../environments'
 
-
-
-// Login component to provide token from matching email and password
+//! Login component to provide token from matching email and password
 function Login({ updateToken, updateCreatorID }, {}) {
-
     let email = ''
     let password = ''
-
     const emailRef = useRef();
     const passwordRef = useRef();
-    
     const navigate = useNavigate();
-    
-    
+      
     const [ emailState, setEmailState ] = useState();
 
     const handleSubmit = async (e) => {
@@ -44,8 +38,6 @@ function Login({ updateToken, updateCreatorID }, {}) {
 
             const data = await res.json();
             
-          
-          
             if (data.message === 'Success!') {
                
                 

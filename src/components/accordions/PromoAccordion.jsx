@@ -127,6 +127,8 @@ export default function DrinkAccordion({
                         <ul>
                           <li>Start Date: {startDateFomatted}</li>
                           <li>End Date: {endDateFomatted}</li>
+                          {promo.promoPlace ? ( <li>Location: {promo.promoPlace.formattedAddress}</li>) : null}
+                         
                         </ul>
                       </CardText>
                       <Button

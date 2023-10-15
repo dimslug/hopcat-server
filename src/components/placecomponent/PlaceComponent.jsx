@@ -1,36 +1,64 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { StandaloneSearchBox, useJsApiLoader } from "@react-google-maps/api"
+import { REACT_APP_GOOGLE_API_KEY } from "../../environments";
 
 const libraries = ['places'];
-const PlaceComponent = () => {
+const google = window.google;
+
+console.log('Inside Place Component')
+
+
+
+
+const PlaceComponent = ({ onAddressSelected, currentAddress }) => {
     const inputRef = useRef();
 
+    //! useState
+    const [selectedAddress, setSelectedAddress] = useState({
+      formattedAddress: '',
+      latitude: null,
+      longitude: null
+    });
+ 
     const { isLoaded, loadError } = useJsApiLoader({
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+        googleMapsApiKey: REACT_APP_GOOGLE_API_KEY,
         libraries
     });
 
     const handlePlaceChanged = () => {
         const [ place ] = inputRef.current.getPlaces();
         if(place) {
+          const newAddress = {
+            formattedAddress: place.formatted_address,
+            latitude: place.geometry.location.lat(),
+            longitude: place.geometry.location.lng()
+          };
+          setSelectedAddress(newAddress);
+          onAddressSelected(newAddress);
+          
             console.log(place.formatted_address)
             console.log(place.geometry.location.lat())
             console.log(place.geometry.location.lng())
+          
         }
     }
 
     return (
+     
         isLoaded
         &&
         <StandaloneSearchBox
         onLoad={ref => inputRef.current = ref}
         onPlacesChanged={handlePlaceChanged}
+   
         >
             <input
-            type="text"
-            className="form-control"
-            placeholder='Enter Location'
-            />
+              type="text"
+              className="form-control"
+              placeholder={currentAddress ? currentAddress : 'Enter Location'}
+     
+           />
+           
         </StandaloneSearchBox>
     )
 }
@@ -77,6 +105,7 @@ function initMap() {
       fields: ["address_components", "geometry", "name"],
       types: ["address"],
     });
+
     autocomplete.addListener('place_changed', function() {
       const place = autocomplete.getPlace();
       if (!place.geometry) {
@@ -86,6 +115,7 @@ function initMap() {
         return;
       }
       fillInAddress(place);
+      console.log(place)
     });
   
     function fillInAddress(place) { // optional parameter

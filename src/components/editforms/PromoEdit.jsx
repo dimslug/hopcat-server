@@ -3,6 +3,7 @@ import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import FullButton from "../buttons/FullButton";
 import { baseURL } from "../../environments";
+import PlaceComponent from "../placecomponent/PlaceComponent";
 
 export default function PromoEdit(props) {
   const sessiontoken = props.sessiontoken;
@@ -22,6 +23,11 @@ export default function PromoEdit(props) {
   const [promoToEdit, setPromoToEdit] = useState([]);
   const [startDateFormatted, setStartDateFormatted] = useState("");
   const [endDateFormatted, setEndDateFormatted] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState({
+    formattedAddress: '',
+    latitude: null,
+    longitude: null
+   })
 
   //! useEffects
   useEffect(() => {
@@ -51,7 +57,15 @@ export default function PromoEdit(props) {
     setLoading(false);
   }, [promoToEdit])
 
+//! useRefs
+  const promoTextRef = useRef();
+  const startDateRef = useRef();
+  const endDateRef = useRef();
 
+//! PlaceComponent Address Callback
+const handleAddressSelected = (address) => {
+  setSelectedAddress(address)
+}
 
   //! Fetch Promo
   const fetchPromo = async () => {
@@ -104,6 +118,10 @@ export default function PromoEdit(props) {
           <Input id="endDate" name="endDate" innerRef={endDateRef} type="date">
           </Input>
           <Label for="endDate">Current End Date: {endDateFormatted}</Label>
+          <PlaceComponent 
+          onAddressSelected={handleAddressSelected}
+          currentAddress={promoToEdit[0].promoPlace.formattedAddress}
+          />
         </FormGroup>
        
         <FullButton>
@@ -129,6 +147,10 @@ export default function PromoEdit(props) {
 
   if (promoToEdit[0].endDate !== endDateRef.current.value && endDateRef.current.value.trim() !== '') {
     requestBody.endDate = endDateRef.current.value;
+  }
+
+  if (promoToEdit[0].promoPlace.formattedAddress !== selectedAddress.formattedAddress && selectedAddress.formattedAddress.trim() !== '') {
+    requestBody.promoPlace = selectedAddress
   }
 
     requestBody.creatorID = creatorID
@@ -159,9 +181,6 @@ export default function PromoEdit(props) {
     }
   };
 
-  const promoTextRef = useRef();
-  const startDateRef = useRef();
-  const endDateRef = useRef();
   
   
 console.log(loading)

@@ -1,6 +1,5 @@
 import React from "react";
 import { useLocation } from 'react-router-dom';
-// import PlaceComponent from './components/placecomponent/PlaceComponent';
 import HopSpotNav from "../nav/Nav";
 import DrinkCreate from "./DrinkCreate";
 import PromoCreate from "./PromoCreate";
@@ -22,11 +21,11 @@ export default function CreateIndex(props) {
         setCreatorID={setCreatorID}
         creatorID={creatorID}
       />
-       <div className="row mt-3">
+       {/* <div className="row mt-3"> */}
       {/* <div className="col-6 offset-3"> */}
-        {/* <PlaceComponent /> */}
+     
       {/* </div> */}
-    </div>
+    {/* </div> */}
       {currentPage === "drinks" ? (
         <>
           <DrinkCreate
@@ -36,6 +35,7 @@ export default function CreateIndex(props) {
             creatorID={creatorID}
             currentPage={currentPage}
           />
+          
         </>
       ) : currentPage === "promos" ? (
         <>
