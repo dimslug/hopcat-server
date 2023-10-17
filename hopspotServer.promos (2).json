@@ -1,0 +1,142 @@
+[
+  {
+    "_id": {
+      "$oid": "652c3465b320fd8297e1d793"
+    },
+    "creatorID": {
+      "$oid": "64fe4294f0cc2866eba2c62b"
+    },
+    "drinkID": {
+      "$oid": "6500e371ab6443ac0f1ed390"
+    },
+    "promoText": "Two Claws are better than 1 or 3!",
+    "startDate": {
+      "$date": "2023-10-15T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2023-10-15T00:00:00.000Z"
+    },
+    "promoPlace": {
+      "formattedAddress": "3215 Spur 482, Irving, TX 75062",
+      "latitude": 32.8466105,
+      "longitude": -96.89829689999999
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "652c53c42e1907e6706a7ce1"
+    },
+    "creatorID": {
+      "$oid": "64fe4294f0cc2866eba2c62b"
+    },
+    "drinkID": {
+      "$oid": "65107cfb6b82639b423c6341"
+    },
+    "promoText": "Don't Drink & Drive",
+    "startDate": {
+      "$date": "2023-10-15T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2023-10-24T00:00:00.000Z"
+    },
+    "promoPlace": {
+      "formattedAddress": "1329 Wiley Oak Dr, Jarrettsville, MD 21084",
+      "latitude": 39.5946028,
+      "longitude": -76.4726014
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "652c5f912e1907e6706a7d43"
+    },
+    "creatorID": {
+      "$oid": "64fe4294f0cc2866eba2c62b"
+    },
+    "drinkID": {
+      "$oid": "650cdc255adb31fe3e03596f"
+    },
+    "promoText": "Avis is the Best",
+    "startDate": {
+      "$date": "2023-10-15T00:00:00.000Z"
+    },
+    "endDate": null,
+    "promoPlace": {
+      "formattedAddress": "4564 Peck Rd, El Monte, CA 91732",
+      "latitude": 34.0872141,
+      "longitude": -118.0154524
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "652c5fa62e1907e6706a7d4f"
+    },
+    "creatorID": {
+      "$oid": "64fe4294f0cc2866eba2c62b"
+    },
+    "drinkID": {
+      "$oid": "65160c2b6900130c8dd176ab"
+    },
+    "promoText": "Its a 'Sale'abration!",
+    "startDate": {
+      "$date": "2023-10-15T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2023-11-15T00:00:00.000Z"
+    },
+    "promoPlace": {
+      "formattedAddress": "7899 McLaughlin Rd, Brampton, ON L6Y 5H9, Canada",
+      "latitude": 43.6562522,
+      "longitude": -79.7368766
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "652c61202e1907e6706a7d76"
+    },
+    "creatorID": {
+      "$oid": "65039798e391ae12d30b117c"
+    },
+    "drinkID": {
+      "$oid": "652afd3079c16125976cbfcd"
+    },
+    "promoText": "We are back in business?",
+    "startDate": {
+      "$date": "2023-10-15T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2023-10-19T00:00:00.000Z"
+    },
+    "promoPlace": {
+      "formattedAddress": "45465 25th St E, Lancaster, CA 93535",
+      "latitude": 34.7098807,
+      "longitude": -118.0883776
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "652c614a2e1907e6706a7d82"
+    },
+    "creatorID": {
+      "$oid": "65039798e391ae12d30b117c"
+    },
+    "drinkID": {
+      "$oid": "652abd7f9004ddb1027f6b6d"
+    },
+    "promoText": "What does the JC Mean, find out!",
+    "startDate": {
+      "$date": "2023-10-15T00:00:00.000Z"
+    },
+    "endDate": null,
+    "promoPlace": {
+      "formattedAddress": "Saratoga Center Shopping Center, 12341 Saratoga Sunnyvale Rd, Saratoga, CA 95070",
+      "latitude": 37.28918549999999,
+      "longitude": -122.0330016
+    },
+    "__v": 0
+  }
+]
