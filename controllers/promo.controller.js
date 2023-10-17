@@ -5,7 +5,15 @@ const { error, success, incomplete } = require("../helpers");
 const log = console.log;
 
 // !!Create -- POST
-router.post('/:drinkID/create', validateSession, async (req, res) => {
+router.post("/:drinkID/create", validateSession, async (req, res) => {
+  try {
+    const creatorID = req.creator._id;
+    const drinkID = req.params.drinkID;
+    // const influencerID = req.body.influencerID;
+    const promoText = req.body.promoText;
+    const startDate = req.body.startDate;
+    const endDate = req.body.endDate;
+
 
     try {
   
@@ -50,6 +58,7 @@ router.get("/:creatorID/", validateSession, async (req, res) => {
     }
   });
 
+
   // !! Get One by drinkID -- GET
 router.get("/getone/:promoID/", validateSession, async (req, res) => {
   try {
@@ -66,6 +75,7 @@ router.get("/getone/:promoID/", validateSession, async (req, res) => {
 
 // !! Update -- PATCH
 router.patch("/edit/:promoID", validateSession, async (req, res) => {
+
     try {
         const promoID = req.params.promoID;
         const creatorID = req.creator._id;
@@ -93,30 +103,50 @@ router.patch("/edit/:promoID", validateSession, async (req, res) => {
 
     } catch (err) {
         error(res, err)
+
     }
-})
+    res.status(200).json({ message: "Promo has been updated", updatedPromo });
+  } catch (err) {
+    error(res, err);
+  }
+});
 
 // !! Delete -- DELETE
 router.delete("/delete/:promoID", validateSession, async (req, res) => {
-    try {
-      const promoID = req.params.promoID;
-      const creatorID = req.creator._id;
-   
-      const deletePromo = await Promo.deleteOne({
-        _id: promoID,
-        creatorID: creatorID,
-      });
-  
-      if (!deletePromo) {
-        return res
-          .status(404)
-          .json({ message: "Invalid Promo/Creator Combination" });
-      }
-    res.status(200).json({ message: "Promo has been deleted" });
-    } catch (err) {
-      error(res, err);
+  try {
+    const promoID = req.params.promoID;
+    const creatorID = req.creator._id;
+
+    const deletePromo = await Promo.deleteOne({
+      _id: promoID,
+      creatorID: creatorID,
+    });
+
+    if (!deletePromo) {
+      return res
+        .status(404)
+        .json({ message: "Invalid Promo/Creator Combination" });
     }
+    res.status(200).json({ message: "Promo has been deleted" });
+  } catch (err) {
+    error(res, err);
+  }
+});
+//!Calender
+// Create a listener for new promos.
+app.post("/promos", async (req, res) => {
+  // Create the new promo.
+  const promo = new Promo(req.body);
+
+  // Save the new promo to the database.
+  await promo.save();
+
+  // Send a notification to the client.
+  await axios.post("/calendar/update", {
+    promo: promo,
   });
 
+  res.sendStatus(201);
+});
 
-  module.exports = router;
+module.exports = router;
