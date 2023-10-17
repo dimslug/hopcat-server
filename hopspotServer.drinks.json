@@ -1,0 +1,211 @@
+[
+  {
+    "_id": {
+      "$oid": "64fe4409f0cc2866eba2c631"
+    },
+    "name": "Rumspringa",
+    "creatorID": {
+      "$oid": "64fe4294f0cc2866eba2c62b"
+    },
+    "cat1": "Beer/Fermented Beverage",
+    "cat2": "IPA",
+    "cat3": "ESB",
+    "price": 3,
+    "description": "it's gold",
+    "photo": "stringhere",
+    "ingredients": ["pride", "hops"],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6500e371ab6443ac0f1ed390"
+    },
+    "name": "Tink Pickler",
+    "creatorID": {
+      "$oid": "64fe4294f0cc2866eba2c62b"
+    },
+    "cat1": "Mixed Drink/Liquor",
+    "cat2": "Highballs",
+    "price": 2,
+    "description": "it's pink",
+    "photo": "stringhere",
+    "ingredients": ["vodka", "pink", "fizz", "joy"],
+    "__v": 0,
+    "cat3": "Martini"
+  },
+  {
+    "_id": {
+      "$oid": "650cdc255adb31fe3e03596f"
+    },
+    "name": "Budget Rent-A-Car",
+    "creatorID": {
+      "$oid": "64fe4294f0cc2866eba2c62b"
+    },
+    "cat1": "Beer/Fermented Beverage",
+    "cat2": "Cider",
+    "cat3": "Action",
+    "price": 3,
+    "description": "Cheaply Cheap",
+    "photo": "kdajfdlakjfl",
+    "ingredients": ["Car, Space, Travel"],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65107cfb6b82639b423c6341"
+    },
+    "name": "Red Lobster",
+    "creatorID": {
+      "$oid": "64fe4294f0cc2866eba2c62b"
+    },
+    "cat1": "Tumbler",
+    "cat2": "ESB",
+    "cat3": "Shot",
+    "price": 3,
+    "description": "When you're here you're family",
+    "photo": "dfagagh",
+    "ingredients": ["Love"],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6515f93864c8689c9be83d08"
+    },
+    "name": "Olive Garden",
+    "creatorID": {
+      "$oid": "64fe4294f0cc2866eba2c62b"
+    },
+    "cat1": "Cocktail",
+    "cat2": "High Ball",
+    "cat3": "Tumbler",
+    "price": 3,
+    "description": " More than an little",
+    "photo": "dfdafadfad",
+    "ingredients": ["Love and Robots"],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65160c2b6900130c8dd176ab"
+    },
+    "name": "Midas",
+    "creatorID": {
+      "$oid": "64fe4294f0cc2866eba2c62b"
+    },
+    "cat1": "Cocktail",
+    "cat2": "High Ball",
+    "cat3": "Martini",
+    "price": 3,
+    "description": "You'll like the way you look",
+    "photo": "adgfdgdrfag",
+    "ingredients": [""],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6519ec1de75de61aeb1d9a8d"
+    },
+    "name": "Hertz",
+    "creatorID": {
+      "$oid": "64fe4294f0cc2866eba2c62b"
+    },
+    "cat1": "Beer/Fermented Beverage",
+    "cat2": "Cider",
+    "price": 5,
+    "description": "",
+    "photo": "",
+    "ingredients": [],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "651f3c4130589b379326b4b4"
+    },
+    "name": "NewestName",
+    "creatorID": {
+      "$oid": "64fe4294f0cc2866eba2c62b"
+    },
+    "cat1": "Mixed Drink/Liquor",
+    "cat2": "Duos & Trios",
+    "price": 3,
+    "description": " More than an little",
+    "photo": "",
+    "ingredients": [],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "651f515a30589b379326b50d"
+    },
+    "name": "MY NEW DRINK",
+    "creatorID": {
+      "$oid": "64fe4294f0cc2866eba2c62b"
+    },
+    "cat1": "Beer/Fermented Beverage",
+    "cat2": "Brown Ale",
+    "price": 3,
+    "description": "Its Brown!",
+    "ingredients": [],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "652abd5f9004ddb1027f6b66"
+    },
+    "name": "Sears",
+    "creatorID": {
+      "$oid": "65039798e391ae12d30b117c"
+    },
+    "cat1": "Beer/Fermented Beverage",
+    "cat2": "Brown Ale",
+    "price": 4,
+    "description": "ITS BROWN!!!",
+    "ingredients": [],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "652abd7f9004ddb1027f6b6d"
+    },
+    "name": "JcPenny's",
+    "creatorID": {
+      "$oid": "65039798e391ae12d30b117c"
+    },
+    "cat1": "Mixed Drink/Liquor",
+    "cat2": "Collinses and Fizzs",
+    "price": 5,
+    "description": "Made with Dr. Pepper",
+    "ingredients": [],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "652af4ed79c16125976cbf27"
+    },
+    "name": "Radio Shack",
+    "creatorID": {
+      "$oid": "65039798e391ae12d30b117c"
+    },
+    "cat1": "Mixed Drink/Liquor",
+    "cat2": "Duos & Trios",
+    "price": 3,
+    "description": "It tastes like failure",
+    "ingredients": [],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "652afd3079c16125976cbfcd"
+    },
+    "name": "RRRRRRite Aid",
+    "creatorID": {
+      "$oid": "65039798e391ae12d30b117c"
+    },
+    "cat1": "Mixed Drink/Liquor",
+    "cat2": "Flips & Nogs",
+    "price": 3,
+    "description": "A little goes a long way",
+    "ingredients": [],
+    "__v": 0
+  }
+]

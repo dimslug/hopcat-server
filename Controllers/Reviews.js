@@ -11,16 +11,23 @@ const errorResponse = (res, error) => {
 //! Create a new review
 router.post("/reviews", async (req, res) => {
   try {
-    const reviewData = req.body;
-    const newReview = new Review(reviewData);
-    const savedReview = await newReview.save();
-    res.status(201).json(savedReview);
+    const userRole = req.user.role;
+    if (userRole === "influencer") {
+      const reviewData = req.body;
+      const newReview = new Review(reviewData);
+      const savedReview = await newReview.save();
+      return res.status(201).json(savedReview);
+    } else {
+      return res
+        .status(403)
+        .json({ error: "Forbidden: Only influencers can create reviews" });
+    }
   } catch (err) {
     errorResponse(res, err);
   }
 });
 
-//! Get all reviews
+//! Get all reviews (visible to everyone)
 router.get("/reviews", async (req, res) => {
   try {
     const reviews = await Review.find();
@@ -47,19 +54,27 @@ router.get("/reviews/:reviewID", async (req, res) => {
 //! Update a review by ID
 router.patch("/reviews/:reviewID", async (req, res) => {
   try {
-    const { reviewID } = req.params;
-    const updatedData = req.body;
-    const updatedReview = await Review.findOneAndUpdate(
-      { reviewID },
-      updatedData,
-      {
-        new: true,
+    const userRole = req.user.role;
+
+    if (userRole === "influencer") {
+      const { reviewID } = req.params;
+      const updatedData = req.body;
+      const updatedReview = await Review.findOneAndUpdate(
+        { reviewID },
+        updatedData,
+        {
+          new: true,
+        }
+      );
+      if (!updatedReview) {
+        return res.status(404).json({ error: "Review not found" });
       }
-    );
-    if (!updatedReview) {
-      return res.status(404).json({ error: "Review not found" });
+      return res.status(200).json(updatedReview);
+    } else {
+      return res
+        .status(403)
+        .json({ error: "Forbidden: Only influencers can update reviews" });
     }
-    res.status(200).json(updatedReview);
   } catch (err) {
     errorResponse(res, err);
   }
@@ -68,12 +83,19 @@ router.patch("/reviews/:reviewID", async (req, res) => {
 //! Delete a review by ID
 router.delete("/reviews/:reviewID", async (req, res) => {
   try {
-    const { reviewID } = req.params;
-    const deletedReview = await Review.findOneAndDelete({ reviewID });
-    if (!deletedReview) {
-      return res.status(404).json({ error: "Review not found" });
+    const userRole = req.user.role;
+    if (userRole === "admin" || userRole === "influencer") {
+      const { reviewID } = req.params;
+      const deletedReview = await Review.findOneAndDelete({ reviewID });
+      if (!deletedReview) {
+        return res.status(404).json({ error: "Review not found" });
+      }
+      return res.status(204).send();
+    } else {
+      return res.status(403).json({
+        error: "Forbidden: Only admins and influencers can delete reviews",
+      });
     }
-    res.status(204).send();
   } catch (err) {
     errorResponse(res, err);
   }
