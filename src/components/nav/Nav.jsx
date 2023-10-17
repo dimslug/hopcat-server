@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import '../../index.css'
 import {
   Collapse,
@@ -13,6 +14,7 @@ import {
   DropdownMenu,
   DropdownItem,
   NavbarText,
+
 } from 'reactstrap';
 import Logout from '../auth/logout/Logout';
 
@@ -37,6 +39,9 @@ function HopSpotNav(props) {
         </NavbarToggler>
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto custom-collapse" navbar>
+            <NavItem>
+            <NavLink href="/components/">Profile</NavLink>
+            </NavItem>
             <NavItem>
               <NavLink href="/creator/drinks">Drinks</NavLink>
             </NavItem>
@@ -71,6 +76,7 @@ function HopSpotNav(props) {
       </Navbar>
     </>
   );
+
 }
 
 export default HopSpotNav;

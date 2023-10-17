@@ -1,27 +1,26 @@
 
+import "./App.css";
+import Auth from "./components/auth/Auth";
+import { useEffect, useState } from "react";
+import Nav from "./components/nav/Nav";
+import InflHome from "./components/inflhome/InflHome";
 import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./index.css";
-import Auth from "./components/auth/Auth";
-import { useEffect, useState  } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Footer from "./components/footer/Footer";
 import CreatorIndex from "./components/creator/CreatorIndex";
-
-// import DrinkCreate from "./components/createforms/DrinkCreate";
-// import PromoCreate from "./components/createforms/PromoCreate";
-// import DrinkEdit from "./components/editforms/DrinkEdit";
-// import PromoEdit from "./components/editforms/PromoEdit";
 import CreateIndex from "./components/createforms/CreateIndex";
 import EditIndex from "./components/editforms/EditIndex";
+
 
 function App() {
   // Token use state set up
   const [sessiontoken, setSessionToken] = useState("");
   const [creatorID, setCreatorID] = useState("");
 
-    console.log("Token: ", sessiontoken);
-  
+  console.log("Token: ", sessionToken);
+
     const updateToken = (newToken) => {
       localStorage.setItem("token", newToken);
       setSessionToken(newToken);
@@ -32,7 +31,7 @@ function App() {
       setCreatorID(newCreatorID);
     }
   
-    // Token use ref set up
+   // Token use ref set up
     useEffect(() => {
       if (localStorage.getItem("token")) {
    
@@ -46,12 +45,7 @@ function App() {
 
   return (
 
-
-
     <div className="App">
-      
-   
-
     {/* {sessiontoken !== "" ? (
       <Logout setSessionToken={setSessionToken} />
     ) : null} */}
@@ -115,49 +109,19 @@ function App() {
     />
     }
     />
-    {/* <Route path="/drink/create" element={<DrinkCreate 
-    setSessionToken={setSessionToken}
-    sessiontoken={sessiontoken}
-    setCreatorID={setCreatorID} 
-    creatorID={creatorID}
-    currentPage={'drinks'}
-    />
-    }
-    />
-    <Route path="/promo/create" element={<PromoCreate 
-    setSessionToken={setSessionToken}
-    sessiontoken={sessiontoken}
-    setCreatorID={setCreatorID} 
-    creatorID={creatorID}
-    currentPage={'promos'}
-    />
-    }
-    /> */}
-        {/* <Route path="/drink/update" element={<DrinkEdit 
-    setSessionToken={setSessionToken}
-    sessiontoken={sessiontoken}
-    setCreatorID={setCreatorID} 
-    creatorID={creatorID}
-    currentPage={'drinks'}
-    />
-    }
-    />
-    <Route path="/promo/update" element={<PromoEdit 
-    setSessionToken={setSessionToken}
-    sessiontoken={sessiontoken}
-    setCreatorID={setCreatorID} 
-    creatorID={creatorID}
-    currentPage={'promos'}
-    />
-    }
-    /> */}
-    </Routes>
-    {/* <Routes>
-      <Route path="/influencer/frontpage" element={<InfluencerIndex />}/>
-    </Routes> */}
 
-    <Footer />
-  </div>
+      <Nav setSessionToken={setSessionToken}
+        sessionToken={sessionToken} />
+        
+      <Routes>
+        <Route path="/" element={<Auth updateToken={updateToken} />} />
+        <Route path="/inflHome" element={<InflHome updateToken={updateToken} />} />
+
+      </Routes>
+
+      <Footer />
+    </div>
+
   );
 }
 

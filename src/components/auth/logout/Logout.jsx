@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
+
 import '../../../App.css'
 
 function Logout({ setSessionToken, setCreatorID }) {
@@ -34,6 +35,7 @@ function Logout({ setSessionToken, setCreatorID }) {
       </Button>
     </>
   );
+
 }
 
 export default Logout
