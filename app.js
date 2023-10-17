@@ -12,6 +12,8 @@ const jwt = require("jsonwebtoken");
 const calendar = require("./calendar.js");
 
 //! IMPORTS
+
+
 const {
   promoController,
   drinkController,
@@ -19,6 +21,7 @@ const {
   notificationController,
 } = require("./controllers");
 const { db } = require("./db");
+
 
 //! MIDDLEWARE
 //* data handling
@@ -34,9 +37,12 @@ app.use("/calendar", calendar);
 app.use("/notifications", notificationController);
 
 //! Connection
+
+
 const server = async () => {
   db();
   app.listen(PORT, () => log(`Hopspot Server running on Port: ${PORT}`));
 };
 
 server();
+

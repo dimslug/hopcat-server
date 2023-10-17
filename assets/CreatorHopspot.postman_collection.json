@@ -1,0 +1,761 @@
+{
+	"info": {
+		"_postman_id": "876762a7-dba6-45f6-a210-cbdf57f62984",
+		"name": "Hopspot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27233122"
+	},
+	"item": [
+		{
+			"name": "Hopspot",
+			"item": [
+				{
+					"name": "Drink by Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/drink/bycategory/:cat1/:cat2/:cat3",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"drink",
+								"bycategory",
+								":cat1",
+								":cat2",
+								":cat3"
+							],
+							"variable": [
+								{
+									"key": "cat1",
+									"value": "shot"
+								},
+								{
+									"key": "cat2",
+									"value": "cocktail"
+								},
+								{
+									"key": "cat3",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drink by Ingredient",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/drink/byingredient/:ing1/:ing2/:ing3",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"drink",
+								"byingredient",
+								":ing1",
+								":ing2",
+								":ing3"
+							],
+							"variable": [
+								{
+									"key": "ing1",
+									"value": "brown"
+								},
+								{
+									"key": "ing2",
+									"value": ""
+								},
+								{
+									"key": "ing3",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creator Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Joe\",\r\n    \"lastName\": \"Schmoe\",\r\n   \"username\": \"JoeS\",\r\n   \"email\": \"joe@email.com\",\r\n   \"password\": \"test\",\r\n   \"socials\": [\r\n       \"facebook.com\",\r\n       \"linkedIn.com\",\r\n       \"myspace.com\"\r\n   ]\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/creator/signup/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"creator",
+								"signup",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creator Update",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Joe\",\r\n    \"lastName\": \"Schmoe\",\r\n   \"username\": \"JoeS\",\r\n   \"email\": \"joe22@email.com\",\r\n   \"socials\": [\r\n       \"facebook.com\",\r\n       \"linkedIn.com\",\r\n       \"myspace.com\"\r\n   ]\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/creator/edit/:creatorID/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"creator",
+								"edit",
+								":creatorID",
+								""
+							],
+							"variable": [
+								{
+									"key": "creatorID",
+									"value": "{{creatorID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creator Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/creator/delete/:creatorID/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"creator",
+								"delete",
+								":creatorID",
+								""
+							],
+							"variable": [
+								{
+									"key": "creatorID",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drink Create",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var now = new Date();\r",
+									"var timestamp = now.toISOString(); //or whatever format you want.\r",
+									"pm.environment.set(\"timestamp\", timestamp);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cat1\": \"beer\",\r\n    \"cat2\": \"IPA\",\r\n    \"cat3\": \"Craft\",\r\n    \"price\": \"2\",\r\n    \"name\": \"Rumspringa\",\r\n    \"description\": \"it's gold\",\r\n    \"photo\": \"stringhere\",\r\n   \"ingredients\": [\"pride\", \"hops\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/drink/create/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"drink",
+								"create",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Promo Create",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var now = new Date();\r",
+									"var timestamp = now.toISOString(); //or whatever format you want.\r",
+									"pm.environment.set(\"timestamp\", timestamp);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"promoText\": \"it's pink\",\r\n    \"startDate\": \"9/4/23\",\r\n   \"endDate\": \"9/21/23\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/promo/:drinkID/create/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promo",
+								":drinkID",
+								"create",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "drinkID",
+									"value": "64f7af1cf46d00a8efc6675c"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drink Update",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var now = new Date();\r",
+									"var timestamp = now.toISOString(); //or whatever format you want.\r",
+									"pm.environment.set(\"timestamp\", timestamp);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cat1\": \"cocktail\",\r\n    \"cat2\": \"sweet\",\r\n    \"cat3\": \"cat3\",\r\n    \"price\": \"2\",\r\n    \"name\": \"Tink Pickler\",\r\n    \"description\": \"it's pink\",\r\n    \"photo\": \"stringhere\",\r\n   \"ingredients\": [\"vodka\", \"pink\", \"fizz\", \"joy\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/drink/edit/:drinkID/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"drink",
+								"edit",
+								":drinkID",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "drinkID",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Promo Update",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var now = new Date();\r",
+									"var timestamp = now.toISOString(); //or whatever format you want.\r",
+									"pm.environment.set(\"timestamp\", timestamp);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"promoText\": \"it's pink\",\r\n    \"startDate\": \"9/4/23\",\r\n   \"endDate\": \"9/14/23\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/promo/edit/:promoID/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promo",
+								"edit",
+								":promoID",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "promoID",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creator Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"email\": \"DK@email.com\",\r\n   \"password\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/creator/login/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"creator",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drink Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/drink/delete/:drinkID",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"drink",
+								"delete",
+								":drinkID"
+							],
+							"query": [
+								{
+									"key": "Auth",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "drinkID",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Promo Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/promo/delete/:promoID",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promo",
+								"delete",
+								":promoID"
+							],
+							"query": [
+								{
+									"key": "Auth",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "promoID",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Promos by Creator",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/promo/:creatorID",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"promo",
+								":creatorID"
+							],
+							"variable": [
+								{
+									"key": "creatorID",
+									"value": "{{creatorID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drink by Creator",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/drink/creations/:creatorID",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"drink",
+								"creations",
+								":creatorID"
+							],
+							"variable": [
+								{
+									"key": "creatorID",
+									"value": "{{creatorID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drink Get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/drink//getone/:drinkID",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"drink",
+								"",
+								"getone",
+								":drinkID"
+							],
+							"variable": [
+								{
+									"key": "drinkID",
+									"value": "64f7ad2af46d00a8efc66756"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creator Getall",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/creator/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"creator",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creator Getone",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/creator/:creatorID",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"creator",
+								":creatorID"
+							],
+							"variable": [
+								{
+									"key": "creatorID",
+									"value": "{{creatorID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
