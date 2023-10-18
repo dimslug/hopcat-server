@@ -6,6 +6,11 @@ const db = async () => {
   try {
     await mongoose.connect(`${connection}/${collection}`);
 
+
+    try {
+
+        await mongoose.connect(`${connection}/${collection}`);
+
         console.log(
             `Database connected: ${connection}/${collection}`
             );
@@ -15,5 +20,6 @@ const db = async () => {
     }
 
 }
+
 
 module.exports = { db, mongoose }; // exporting both the function and dependency connection.

@@ -1,0 +1,38 @@
+[
+  {
+    "_id": {
+      "$oid": "64fe4294f0cc2866eba2c62b"
+    },
+    "username": "JoeS",
+    "firstName": "Joe",
+    "lastName": "Schmoe",
+    "email": "joe@email.com",
+    "password": "$2b$13$wNzfX47LE0Yk7n4Cf0YcKei.v.oq3BLdvV/PVCdnL4QCc/jnif9Di",
+    "socials": ["facebook.com", "linkedIn.com", "myspace.com"],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65039798e391ae12d30b117c"
+    },
+    "username": "Blursious",
+    "firstName": "Blurdy",
+    "lastName": "Blurd",
+    "email": "email@email.com",
+    "password": "$2b$13$VDRDqR8fyojN5tGEHMohiufHc1vhm9GHNYov.J7tx2mlUCzk65Qf6",
+    "socials": ["blursed, blursing"],
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6507438346841f78ceeec9f8"
+    },
+    "username": "admin",
+    "firstName": "admin",
+    "lastName": "admin",
+    "email": "admin@email.com",
+    "password": "$2b$13$E4Wz3//QSKNn47kWrw41ler1uw17COgaYqiRFKxDfGN5bFvdlQwHe",
+    "socials": [],
+    "__v": 0
+  }
+]

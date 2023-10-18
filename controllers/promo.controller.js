@@ -14,7 +14,7 @@ router.post("/:drinkID/create", validateSession, async (req, res) => {
     const startDate = req.body.startDate;
     const endDate = req.body.endDate;
 
-<<<<<<< HEAD
+
     try {
   
         const creatorID = req.creator._id;
@@ -48,34 +48,15 @@ router.post("/:drinkID/create", validateSession, async (req, res) => {
 
 // !! Get All by creatorID -- GET
 router.get("/:creatorID/", validateSession, async (req, res) => {
-=======
-    const promo = new Promo({
-      creatorID: creatorID,
-      drinkID: drinkID,
-      // influencerID: influencerID,
-      promoText: promoText,
-      startDate: startDate,
-      endDate: endDate,
-    });
-
-    const newPromo = await promo.save();
-    newPromo ? success(res, newPromo) : incomplete(res);
-  } catch (err) {
-    error(res, err);
-  }
-});
-
-// !! Get All by creatorID -- GET
-router.get("/:creatorID/", async (req, res) => {
-  try {
-    const creatorID = req.params.creatorID;
-    const getAllPromos = await Promo.find({ creatorID: creatorID });
-
-    getAllPromos ? success(res, getAllPromos) : incomplete(res);
-  } catch (err) {
-    error(res, err);
-  }
-});
+    try {
+      const creatorID = req.params.creatorID;
+      const getAllPromos = await Promo.find({ creatorID: creatorID });
+  
+      getAllPromos ? success(res, getAllPromos) : incomplete(res);
+    } catch (err) {
+      error(res, err);
+    }
+  });
 
 //!! Get all - Sorted by Starting Time closest to current date/time return 15 in ascending order
 router.get("/upcoming", async (req, res) => {
@@ -102,10 +83,21 @@ router.get("/getone/:promoID/", validateSession, async (req, res) => {
   }
 });
 
+//!! Get all - Sorted by Starting Time closest to current date/time return 15 in ascending order
+router.get("/upcoming", async (req, res) => {
+    try {
+        const getAllPromos = await Promo.find().sort({ startDate: 1 }).limit(15);
+        getAllPromos ? success(res, getAllPromos) : incomplete(res);
+    } catch (err) {
+        error(res, err);
+    }
+    
+});
+
 
 // !! Update -- PATCH
 router.patch("/edit/:promoID", validateSession, async (req, res) => {
-<<<<<<< HEAD
+
     try {
         const promoID = req.params.promoID;
         const creatorID = req.creator._id;
@@ -133,30 +125,7 @@ router.patch("/edit/:promoID", validateSession, async (req, res) => {
 
     } catch (err) {
         error(res, err)
-=======
-  try {
-    const promoID = req.params.promoID;
-    const creatorID = req.creator._id;
-    // const newInfluencerID = req.body.influencerID;
-    const newPromoText = req.body.promoText;
-    const newStartDate = req.body.startDate;
-    const newEndDate = req.body.endDate;
-    const updatedInfo = {
-      // influencerID: newInfluencerID,
-      promoText: newPromoText,
-      startDate: newStartDate,
-      endDate: newEndDate,
-    };
-    const updatedPromo = await Promo.findOneAndUpdate(
-      { _id: promoID, creatorID: creatorID },
-      updatedInfo,
-      { new: true }
-    );
-    if (!updatedPromo) {
-      return res
-        .status(404)
-        .json({ message: "Invalid Promo/Creator Combination" });
->>>>>>> af88a6b0ab8c83663edade433a09d8168ae29215
+
     }
     res.status(200).json({ message: "Promo has been updated", updatedPromo });
   } catch (err) {
@@ -184,6 +153,22 @@ router.delete("/delete/:promoID", validateSession, async (req, res) => {
   } catch (err) {
     error(res, err);
   }
+});
+//!Calender
+// Create a listener for new promos.
+app.post("/promos", async (req, res) => {
+  // Create the new promo.
+  const promo = new Promo(req.body);
+
+  // Save the new promo to the database.
+  await promo.save();
+
+  // Send a notification to the client.
+  await axios.post("/calendar/update", {
+    promo: promo,
+  });
+
+  res.sendStatus(201);
 });
 
 module.exports = router;

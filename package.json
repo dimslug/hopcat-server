@@ -20,19 +20,16 @@
 
   "dependencies": {
 
-<<<<<<< HEAD
-    "bcrypt": "^5.1.1",
-
     "cors": "^2.8.5",
 
-=======
     "@fullcalendar/core": "^6.1.9",
 
     "@fullcalendar/daygrid": "^6.1.9",
 
+    "axios": "^1.5.0",
+
     "bcrypt": "^5.1.1",
 
->>>>>>> af88a6b0ab8c83663edade433a09d8168ae29215
     "dotenv": "^16.3.1",
 
     "express": "^4.18.2",

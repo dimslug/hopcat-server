@@ -9,7 +9,7 @@ const validateSession = async (req, res, next) => {
     const decoded = await jwt.verify(token, process.env.JWT);
     // console.log(decoded);
 
-<<<<<<< HEAD
+
         const creator = await creators.findById(decoded.id);
         req.creator = creator;
         

@@ -38,7 +38,7 @@ router.post("/create", validateSession, async (req, res) => {
 
 // !! Update -- PATCH
 router.patch("/edit/:drinkID", validateSession, async (req, res) => {
-<<<<<<< HEAD
+
     try {
       
         const drinkID = req.params.drinkID;
@@ -109,38 +109,7 @@ router.patch("/edit/:drinkID", validateSession, async (req, res) => {
 
     } catch (err) {
         error(res, err)
-=======
-  try {
-    const drinkID = req.params.drinkID;
-    const creatorID = req.creator._id;
-    const newName = req.body.name;
-    const newCat1 = req.body.cat1;
-    const newCat2 = req.body.cat2;
-    const newCat3 = req.body.cat3;
-    const newPrice = req.body.price;
-    const newDescription = req.body.description;
-    const newPhoto = req.body.photo;
-    const newIngredients = req.body.ingredients;
-    const updatedInfo = {
-      name: newName,
-      cat1: newCat1,
-      cat2: newCat2,
-      cat3: newCat3,
-      price: newPrice,
-      description: newDescription,
-      photo: newPhoto,
-      ingredients: newIngredients,
-    };
-    const updatedDrink = await Drink.findOneAndUpdate(
-      { _id: drinkID, creatorID: creatorID },
-      updatedInfo,
-      { new: true }
-    );
-    if (!updatedDrink) {
-      return res
-        .status(404)
-        .json({ message: "Invalid Drink/Creator Combination" });
->>>>>>> af88a6b0ab8c83663edade433a09d8168ae29215
+
     }
     res.status(200).json({ message: "Drink has been updated", updatedDrink });
   } catch (err) {
@@ -171,7 +140,6 @@ router.delete("/delete/:drinkID", validateSession, async (req, res) => {
 });
 
 // !! Get All by creatorID -- GET
-<<<<<<< HEAD
 router.get("/creations/:creatorID/", validateSession, async (req, res) => {
     try {
       const creatorID = req.params.creatorID;
@@ -183,18 +151,7 @@ router.get("/creations/:creatorID/", validateSession, async (req, res) => {
       error(res, err);
     }
   });
-=======
-router.get("/creations/:creatorID/", async (req, res) => {
-  try {
-    const creatorID = req.params.creatorID;
-    const getAllDrinks = await Drink.find({ creatorID: creatorID });
 
-    getAllDrinks ? success(res, getAllDrinks) : incomplete(res);
-  } catch (err) {
-    error(res, err);
-  }
-});
->>>>>>> af88a6b0ab8c83663edade433a09d8168ae29215
 
 // !! Get One by drinkID -- GET
 router.get("/getone/:drinkID/", async (req, res) => {
@@ -212,7 +169,7 @@ router.get("/getone/:drinkID/", async (req, res) => {
 // !! Get by category -- GET
 router.get("/bycategory/:cat1/:cat2/:cat3", async (req, res) => {
   try {
-<<<<<<< HEAD
+
     const cat1 = req.params.cat1
     const cat2 = req.params.cat2
     const cat3 = req.params.cat3
@@ -222,21 +179,7 @@ router.get("/bycategory/:cat1/:cat2/:cat3", async (req, res) => {
       {cat3: {$in: [cat1, cat2, cat3]}}
     ]
   });
-=======
-    log(req.params.cat1);
-    log(req.params.cat2);
-    log(req.params.cat3);
-    const cat1 = req.params.cat1;
-    const cat2 = req.params.cat2;
-    const cat3 = req.params.cat3;
-    const getDrinkByCat = await Drink.find({
-      $or: [
-        { cat1: { $in: [cat1, cat2, cat3] } },
-        { cat2: { $in: [cat1, cat2, cat3] } },
-        { cat3: { $in: [cat1, cat2, cat3] } },
-      ],
-    });
->>>>>>> af88a6b0ab8c83663edade433a09d8168ae29215
+
 
     getDrinkByCat ? success(res, getDrinkByCat) : incomplete(res);
   } catch (err) {

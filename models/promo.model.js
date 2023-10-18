@@ -37,7 +37,7 @@ const PromoSchema = new mongoose.Schema({
   },
 });
 
-<<<<<<< HEAD
+
 
 },
 promoPlace: {
@@ -51,6 +51,4 @@ promoPlace: {
 })
 
 module.exports = mongoose.model("Promo", PromoSchema)
-=======
-module.exports = mongoose.model("Promo", PromoSchema);
->>>>>>> af88a6b0ab8c83663edade433a09d8168ae29215
+
