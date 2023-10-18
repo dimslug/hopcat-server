@@ -72,6 +72,17 @@ router.get("/getone/:promoID/", validateSession, async (req, res) => {
   }
 });
 
+//!! Get all - Sorted by Starting Time closest to current date/time return 15 in ascending order
+router.get("/upcoming", async (req, res) => {
+    try {
+        const getAllPromos = await Promo.find().sort({ startDate: 1 }).limit(15);
+        getAllPromos ? success(res, getAllPromos) : incomplete(res);
+    } catch (err) {
+        error(res, err);
+    }
+    
+});
+
 
 // !! Update -- PATCH
 router.patch("/edit/:promoID", validateSession, async (req, res) => {
