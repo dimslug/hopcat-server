@@ -37,4 +37,18 @@ const PromoSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Promo", PromoSchema);
+
+
+},
+promoPlace: {
+    type: Object,
+    required: true
+
+},
+
+
+
+})
+
+module.exports = mongoose.model("Promo", PromoSchema)
+
