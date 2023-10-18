@@ -14,58 +14,96 @@ router.post("/:drinkID/create", validateSession, async (req, res) => {
     const startDate = req.body.startDate;
     const endDate = req.body.endDate;
 
-    const promo = new Promo({
-      creatorID: creatorID,
-      drinkID: drinkID,
-      // influencerID: influencerID,
-      promoText: promoText,
-      startDate: startDate,
-      endDate: endDate,
-    });
 
-    const newPromo = await promo.save();
-    newPromo ? success(res, newPromo) : incomplete(res);
-  } catch (err) {
-    error(res, err);
-  }
-});
+    try {
+  
+        const creatorID = req.creator._id;
+        const drinkID = req.params.drinkID;
+        // const influencerID = req.body.influencerID;
+        const promoText = req.body.promoText;
+        const startDate = req.body.startDate;
+        const endDate = req.body.endDate;
+        const promoPlace = req.body.promoPlace;
+
+        const promo = new Promo({
+            creatorID: creatorID,
+            drinkID: drinkID,
+            // influencerID: influencerID,
+            promoText: promoText,
+            startDate: startDate,
+            endDate: endDate,
+            promoPlace: promoPlace,
+          
+        });
+
+        const newPromo = await promo.save();
+        newPromo ? success(res, newPromo) : incomplete(res);
+
+
+
+    } catch (err) {
+        error(res, err)
+    }
+})
 
 // !! Get All by creatorID -- GET
-router.get("/:creatorID/", async (req, res) => {
-  try {
-    const creatorID = req.params.creatorID;
-    const getAllPromos = await Promo.find({ creatorID: creatorID });
+router.get("/:creatorID/", validateSession, async (req, res) => {
+    try {
+      const creatorID = req.params.creatorID;
+      const getAllPromos = await Promo.find({ creatorID: creatorID });
+  
+      getAllPromos ? success(res, getAllPromos) : incomplete(res);
+    } catch (err) {
+      error(res, err);
+    }
+  });
 
-    getAllPromos ? success(res, getAllPromos) : incomplete(res);
+
+  // !! Get One by drinkID -- GET
+router.get("/getone/:promoID/", validateSession, async (req, res) => {
+  try {
+    log(req.params.promoID)
+    const promoID = req.params.promoID;
+    const getPromo = await Promo.find({ _id: promoID });
+
+    getPromo ? success(res, getPromo) : incomplete(res);
   } catch (err) {
     error(res, err);
   }
 });
+
 
 // !! Update -- PATCH
 router.patch("/edit/:promoID", validateSession, async (req, res) => {
-  try {
-    const promoID = req.params.promoID;
-    const creatorID = req.creator._id;
-    // const newInfluencerID = req.body.influencerID;
-    const newPromoText = req.body.promoText;
-    const newStartDate = req.body.startDate;
-    const newEndDate = req.body.endDate;
-    const updatedInfo = {
-      // influencerID: newInfluencerID,
-      promoText: newPromoText,
-      startDate: newStartDate,
-      endDate: newEndDate,
-    };
-    const updatedPromo = await Promo.findOneAndUpdate(
-      { _id: promoID, creatorID: creatorID },
-      updatedInfo,
-      { new: true }
-    );
-    if (!updatedPromo) {
-      return res
-        .status(404)
-        .json({ message: "Invalid Promo/Creator Combination" });
+
+    try {
+        const promoID = req.params.promoID;
+        const creatorID = req.creator._id;
+        // const newInfluencerID = req.body.influencerID;
+        const newPromoText = req.body.promoText;
+        const newStartDate = req.body.startDate;
+        const newEndDate = req.body.endDate;
+        const newPromoPlace = req.body.promoPlace
+
+        const updatedInfo = {
+            // influencerID: newInfluencerID, 
+            promoText: newPromoText, startDate: newStartDate, endDate: newEndDate, promoPlace: newPromoPlace
+        }
+        const updatedPromo = await Promo.findOneAndUpdate(
+            { _id: promoID, creatorID: creatorID }, updatedInfo, { new: true }
+        );
+        if (!updatedPromo) {
+            return res
+            .status(404)
+            .json({ message: "Invalid Promo/Creator Combination" });
+        }
+        res
+      .status(200)
+      .json({ message: "Promo has been updated", updatedPromo });
+
+    } catch (err) {
+        error(res, err)
+
     }
     res.status(200).json({ message: "Promo has been updated", updatedPromo });
   } catch (err) {
