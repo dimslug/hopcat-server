@@ -6,12 +6,17 @@ const reviewSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
-  drinkID: {
+  reviewType: {
     type: String,
+    required: true,
+    enum: ["creator", "drink"],
+  },
+  reviewTypeID: {
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   influencerID: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   rating: {
