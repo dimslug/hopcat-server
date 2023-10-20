@@ -25,25 +25,9 @@ const validateSession = async (req, res, next) => {
         
     } catch (err) {
         res.json({message: err.message});
-=======
-    const creator = await creators.findById(decoded.id);
-    req.creator = creator;
->>>>>>> af88a6b0ab8c83663edade433a09d8168ae29215
 
-    if (!creator) {
-      const influencer = await Influencer.findById(decoded.id);
-      req.influencer = influencer;
-      return next();
+
     }
-
-    return next();
-  } catch (err) {
-    res.json({ message: err.message });
-
-    `Error: ${err.message}`;
-    console.log(err);
-    // res.json({message: err.message});
-  }
 };
 
 module.exports = validateSession;
