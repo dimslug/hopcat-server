@@ -58,6 +58,17 @@ router.get("/:creatorID/", validateSession, async (req, res) => {
     }
   });
 
+//!! Get all - Sorted by Starting Time closest to current date/time return 15 in ascending order
+router.get("/upcoming", async (req, res) => {
+>>>>>>> af88a6b0ab8c83663edade433a09d8168ae29215
+    try {
+        const getAllPromos = await Promo.find().sort({ startDate: 1 }).limit(15);
+        getAllPromos ? success(res, getAllPromos) : incomplete(res);
+    } catch (err) {
+        error(res, err);
+    }
+    
+});
 
   // !! Get One by drinkID -- GET
 router.get("/getone/:promoID/", validateSession, async (req, res) => {

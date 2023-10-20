@@ -20,7 +20,7 @@ const {
   creatorController,
   notificationController,
 } = require("./controllers");
-const { db } = require("./db");
+
 
 
 //! MIDDLEWARE
