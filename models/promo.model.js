@@ -35,16 +35,11 @@ const PromoSchema = new mongoose.Schema({
   endDate: {
     type: Date,
   },
-});
-
-
-
-},
-promoPlace: {
+  promoPlace: {
     type: Object,
     required: true
 
-},
+  },
 
 
 

@@ -6,15 +6,7 @@ const log = console.log;
 
 // !!Create -- POST
 router.post("/:drinkID/create", validateSession, async (req, res) => {
-  try {
-    const creatorID = req.creator._id;
-    const drinkID = req.params.drinkID;
-    // const influencerID = req.body.influencerID;
-    const promoText = req.body.promoText;
-    const startDate = req.body.startDate;
-    const endDate = req.body.endDate;
-
-
+ 
     try {
   
         const creatorID = req.creator._id;
@@ -32,14 +24,11 @@ router.post("/:drinkID/create", validateSession, async (req, res) => {
             promoText: promoText,
             startDate: startDate,
             endDate: endDate,
-            promoPlace: promoPlace,
-          
+            promoPlace: promoPlace,    
         });
 
         const newPromo = await promo.save();
         newPromo ? success(res, newPromo) : incomplete(res);
-
-
 
     } catch (err) {
         error(res, err)
@@ -59,35 +48,12 @@ router.get("/:creatorID/", validateSession, async (req, res) => {
   });
 
 //!! Get all - Sorted by Starting Time closest to current date/time return 15 in ascending order
-router.get("/upcoming", async (req, res) => {
->>>>>>> af88a6b0ab8c83663edade433a09d8168ae29215
+router.get("/upcoming/bydate", async (req, res) => {
     try {
+      console.log('inside upcoming try')
         const getAllPromos = await Promo.find().sort({ startDate: 1 }).limit(15);
         getAllPromos ? success(res, getAllPromos) : incomplete(res);
-    } catch (err) {
-        error(res, err);
-    }
-    
-});
-
-  // !! Get One by drinkID -- GET
-router.get("/getone/:promoID/", validateSession, async (req, res) => {
-  try {
-    log(req.params.promoID)
-    const promoID = req.params.promoID;
-    const getPromo = await Promo.find({ _id: promoID });
-
-    getPromo ? success(res, getPromo) : incomplete(res);
-  } catch (err) {
-    error(res, err);
-  }
-});
-
-//!! Get all - Sorted by Starting Time closest to current date/time return 15 in ascending order
-router.get("/upcoming", async (req, res) => {
-    try {
-        const getAllPromos = await Promo.find().sort({ startDate: 1 }).limit(15);
-        getAllPromos ? success(res, getAllPromos) : incomplete(res);
+        console.log(res)
     } catch (err) {
         error(res, err);
     }
@@ -127,10 +93,7 @@ router.patch("/edit/:promoID", validateSession, async (req, res) => {
         error(res, err)
 
     }
-    res.status(200).json({ message: "Promo has been updated", updatedPromo });
-  } catch (err) {
-    error(res, err);
-  }
+
 });
 
 // !! Delete -- DELETE
@@ -154,9 +117,10 @@ router.delete("/delete/:promoID", validateSession, async (req, res) => {
     error(res, err);
   }
 });
+
 //!Calender
 // Create a listener for new promos.
-app.post("/promos", async (req, res) => {
+router.post("/promos", async (req, res) => {
   // Create the new promo.
   const promo = new Promo(req.body);
 

@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const NotificationController = require("./notification.controller");
+const NotificationController = require("./controllers/notificationController");
 
 // Get all notifications for a user
 router.get("/notifications/:userId", async (req, res) => {
