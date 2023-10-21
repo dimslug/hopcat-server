@@ -3,9 +3,6 @@ const connection = process.env.DBURL;
 const collection = process.env.COLL;
 
 const db = async () => {
-  try {
-    await mongoose.connect(`${connection}/${collection}`);
-
 
     try {
 

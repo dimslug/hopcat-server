@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { Drink, Creator } = require("../models");
-const validateSession = require("../Middleware/validate-session");
+const validateSession = require("../middleware/validate-session");
 const { error, success, incomplete } = require("../helpers");
 const log = console.log;
 
@@ -43,17 +43,7 @@ router.patch("/edit/:drinkID", validateSession, async (req, res) => {
       
         const drinkID = req.params.drinkID;
         const creatorID = req.creator._id
-        // const newName= req.body.name;
-        // const newCat1 = req.body.cat1;
-        // const newCat2 = req.body.cat2;
-        // const newCat3 = req.body.cat3;
-        // const newPrice = req.body.price;
-        // const newDescription = req.body.description;
-        // const newPhoto = req.body.photo;
-        // const newIngredients = req.body.ingredients;
-        
-        //     name: newName, cat1: newCat1, cat2: newCat2, cat3: newCat3, price: newPrice, description: newDescription, photo: newPhoto, ingredients: newIngredients
-        // }
+       
 
         const existingDrink = await Drink.findOne({ _id: drinkID, creatorID });
         console.log(`Existing Drink : ${existingDrink}`)
@@ -90,11 +80,7 @@ router.patch("/edit/:drinkID", validateSession, async (req, res) => {
         if (JSON.stringify(req.body.photo) !== JSON.stringify(existingDrink.photo)) {
           updatedInfo.photo = req.body.photo;
         }
-
-        // if (JSON.stringify(req.body.ingredients) !== JSON.stringify(existingDrink.ingredients)) {
-        //   updatedInfo.ingredients = req.body.ingredients;
-        // }
-
+        
         console.log("UpdatedInfo from controller:", updatedInfo)
         if (Object.keys(updatedInfo).length === 0) {
           return res.status(200).json({ message: "No Changes Detected" })
@@ -111,10 +97,7 @@ router.patch("/edit/:drinkID", validateSession, async (req, res) => {
         error(res, err)
 
     }
-    res.status(200).json({ message: "Drink has been updated", updatedDrink });
-  } catch (err) {
-    error(res, err);
-  }
+  
 });
 
 // !! Delete -- DELETE

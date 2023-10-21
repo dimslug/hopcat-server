@@ -13,15 +13,12 @@ const calendar = require("./calendar.js");
 
 //! IMPORTS
 
-
 const {
   promoController,
   drinkController,
   creatorController,
   notificationController,
 } = require("./controllers");
-const { db } = require("./db");
-
 
 //! MIDDLEWARE
 //* data handling
@@ -29,7 +26,7 @@ app.use(cors());
 app.use(express.json());
 
 //! ROUTES
-app.use("/creator/", creatorController);
+app.use("/creator", creatorController);
 app.use("/drink", drinkController);
 app.use("/promo", promoController);
 app.use("/influencer", influencer);
@@ -37,7 +34,6 @@ app.use("/calendar", calendar);
 app.use("/notifications", notificationController);
 
 //! Connection
-
 
 const server = async () => {
   db();

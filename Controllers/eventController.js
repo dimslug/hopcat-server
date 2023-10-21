@@ -1,5 +1,5 @@
 const Event = require("../models/eventModel");
-const PermissionService = require("../Middleware/authMiddleware");
+const PermissionService = require("../middleware/authMiddleware");
 
 class EventController {
   constructor(eventService, permissionService) {

@@ -3,7 +3,7 @@ const { response } = require("express");
 const Creator = require("../models/creator.model");
 const bcrypt = require("bcrypt");
 const { error, success, incomplete } = require("../helpers");
-const validateSession = require("../Middleware/validate-session");
+const validateSession = require("../middleware/validate-session");
 const jwt = require("jsonwebtoken");
 const SECRET = process.env.JWT;
 

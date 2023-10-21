@@ -27,20 +27,7 @@ const validateSession = async (req, res, next) => {
         res.json({message: err.message});
 
 
-    if (!creator) {
-      const influencer = await Influencer.findById(decoded.id);
-      req.influencer = influencer;
-      return next();
     }
-
-    return next();
-  } catch (err) {
-    res.json({ message: err.message });
-
-    `Error: ${err.message}`;
-    console.log(err);
-    // res.json({message: err.message});
-  }
 };
 
 module.exports = validateSession;
