@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const PromoSchema = new mongoose.Schema({
   // promoID: {
   //     type: mongoose.Types.ObjectId,
@@ -34,16 +35,11 @@ const PromoSchema = new mongoose.Schema({
   endDate: {
     type: Date,
   },
-});
-
-
-
-},
-promoPlace: {
+  promoPlace: {
     type: Object,
     required: true
 
-},
+  },
 
 
 
