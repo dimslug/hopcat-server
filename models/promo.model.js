@@ -35,20 +35,11 @@ const PromoSchema = new mongoose.Schema({
   endDate: {
     type: Date,
   },
-});
-
-
-
-},
 promoPlace: {
     type: Object,
     required: true
-
-},
-
-
-
-})
+}
+});
 
 module.exports = mongoose.model("Promo", PromoSchema)
 

@@ -112,10 +112,8 @@ router.patch("/edit/:drinkID", validateSession, async (req, res) => {
 
     }
     res.status(200).json({ message: "Drink has been updated", updatedDrink });
-  } catch (err) {
-    error(res, err);
   }
-});
+);
 
 // !! Delete -- DELETE
 router.delete("/delete/:drinkID", validateSession, async (req, res) => {

@@ -1,4 +1,6 @@
 const FullCalendar = require("fullcalendar");
+const express = require("express");
+const app = express();
 
 async function fetchPromos() {
   const response = await fetch("http://localhost:3000/promos/active");
@@ -43,3 +45,5 @@ app.get("/calendar", async (req, res) => {
     </html>
   `);
 });
+
+module.exports = app;

@@ -30,3 +30,5 @@ if (drink) {
 } else {
   res.status(404).json({ error: "Drink not found" });
 }
+
+module.exports = router;
