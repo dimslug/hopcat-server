@@ -6,6 +6,7 @@ const log = console.log;
 
 // !!Create -- POST
 router.post("/:drinkID/create", validateSession, async (req, res) => {
+ 
     try {
   
         const creatorID = req.creator._id;
@@ -23,14 +24,11 @@ router.post("/:drinkID/create", validateSession, async (req, res) => {
             promoText: promoText,
             startDate: startDate,
             endDate: endDate,
-            promoPlace: promoPlace,
-          
+            promoPlace: promoPlace,    
         });
 
         const newPromo = await promo.save();
         newPromo ? success(res, newPromo) : incomplete(res);
-
-
 
     } catch (err) {
         error(res, err)
@@ -49,8 +47,7 @@ router.get("/:creatorID/", validateSession, async (req, res) => {
     }
   });
 
-
-  // !! Get One by drinkID -- GET
+   // !! Get One by drinkID -- GET
 router.get("/getone/:promoID/", validateSession, async (req, res) => {
   try {
     log(req.params.promoID)
@@ -63,11 +60,14 @@ router.get("/getone/:promoID/", validateSession, async (req, res) => {
   }
 });
 
+
 //!! Get all - Sorted by Starting Time closest to current date/time return 15 in ascending order
-router.get("/", async (req, res) => {
+router.get("/upcoming/bydate", async (req, res) => {
     try {
-        const getAllPromos = await Promo.find().populate(["creatorID","drinkID"]).sort({ startDate: -1 }).limit(15);
+      console.log('inside upcoming try')
+        const getAllPromos = await Promo.find().sort({ startDate: 1 }).limit(15);
         getAllPromos ? success(res, getAllPromos) : incomplete(res);
+        console.log(res)
     } catch (err) {
         error(res, err);
     }
@@ -107,7 +107,6 @@ router.patch("/edit/:promoID", validateSession, async (req, res) => {
         error(res, err)
 
     }
-    res.status(200).json({ message: "Promo has been updated", updatedPromo });
 
 });
 
@@ -132,6 +131,7 @@ router.delete("/delete/:promoID", validateSession, async (req, res) => {
     error(res, err);
   }
 });
+
 //!Calender
 // Create a listener for new promos.
 router.post("/promos", async (req, res) => {

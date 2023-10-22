@@ -13,11 +13,7 @@ const validateSession = async (req, res, next) => {
     const creator = await creators.findById(decoded.id);
     req.creator = creator;
 
-    if (!creator) {
-      const influencer = await Influencer.findById(decoded.id);
-      req.influencer = influencer;
-      return next();
-    }
+    
 
 
     return next();

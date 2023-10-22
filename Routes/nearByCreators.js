@@ -48,4 +48,4 @@ app.get("/influencers/find-creators-nearby", async (req, res) => {
   res.json(creatorsNearInfluencer);
 });
 
-module.exports = { findCreatorsNearInfluencer };
+module.exports = findCreatorsNearInfluencer

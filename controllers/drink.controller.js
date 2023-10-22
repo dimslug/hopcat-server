@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { Drink, Creator } = require("../models");
-const validateSession = require("../Middleware/validate-session");
+const validateSession = require("../middleware/validate-session");
 const { error, success, incomplete } = require("../helpers");
 const log = console.log;
 
@@ -39,81 +39,66 @@ router.post("/create", validateSession, async (req, res) => {
 // !! Update -- PATCH
 router.patch("/edit/:drinkID", validateSession, async (req, res) => {
 
-    try {
-      
-        const drinkID = req.params.drinkID;
-        const creatorID = req.creator._id
-        // const newName= req.body.name;
-        // const newCat1 = req.body.cat1;
-        // const newCat2 = req.body.cat2;
-        // const newCat3 = req.body.cat3;
-        // const newPrice = req.body.price;
-        // const newDescription = req.body.description;
-        // const newPhoto = req.body.photo;
-        // const newIngredients = req.body.ingredients;
-        
-        //     name: newName, cat1: newCat1, cat2: newCat2, cat3: newCat3, price: newPrice, description: newDescription, photo: newPhoto, ingredients: newIngredients
-        // }
+  try {
 
-        const existingDrink = await Drink.findOne({ _id: drinkID, creatorID });
-        console.log(`Existing Drink : ${existingDrink}`)
-        if (!existingDrink) {
-          return res.status(404).json({ message: "Invalid Drink/Creator Combination" })
-        }
+    const drinkID = req.params.drinkID;
+    const creatorID = req.creator._id
 
-        const updatedInfo = {}
 
-        if (req.body.name !== existingDrink.name) {
-          updatedInfo.name = req.body.name
-        }
+    const existingDrink = await Drink.findOne({ _id: drinkID, creatorID });
+    console.log(`Existing Drink : ${existingDrink}`)
+    if (!existingDrink) {
+      return res.status(404).json({ message: "Invalid Drink/Creator Combination" })
+    }
 
-        if (req.body.cat1 !== existingDrink.cat1) {
-          updatedInfo.cat1 = req.body.cat1;
-        }
+    const updatedInfo = {}
 
-        if (req.body.cat2 !== existingDrink.cat2) {
-          updatedInfo.cat2 = req.body.cat2;
-        }
+    if (req.body.name !== existingDrink.name) {
+      updatedInfo.name = req.body.name
+    }
 
-        if (req.body.cat3 !== existingDrink.cat3) {
-          updatedInfo.cat3 = req.body.cat3;
-        }
+    if (req.body.cat1 !== existingDrink.cat1) {
+      updatedInfo.cat1 = req.body.cat1;
+    }
 
-        if (req.body.price !== existingDrink.price) {
-          updatedInfo.price = req.body.price;
-        }
+    if (req.body.cat2 !== existingDrink.cat2) {
+      updatedInfo.cat2 = req.body.cat2;
+    }
 
-        if (req.body.description !== existingDrink.description) {
-          updatedInfo.description = req.body.description;
-        }
+    if (req.body.cat3 !== existingDrink.cat3) {
+      updatedInfo.cat3 = req.body.cat3;
+    }
 
-        if (JSON.stringify(req.body.photo) !== JSON.stringify(existingDrink.photo)) {
-          updatedInfo.photo = req.body.photo;
-        }
+    if (req.body.price !== existingDrink.price) {
+      updatedInfo.price = req.body.price;
+    }
 
-        // if (JSON.stringify(req.body.ingredients) !== JSON.stringify(existingDrink.ingredients)) {
-        //   updatedInfo.ingredients = req.body.ingredients;
-        // }
+    if (req.body.description !== existingDrink.description) {
+      updatedInfo.description = req.body.description;
+    }
 
-        console.log("UpdatedInfo from controller:", updatedInfo)
-        if (Object.keys(updatedInfo).length === 0) {
-          return res.status(200).json({ message: "No Changes Detected" })
-        }
+    if (JSON.stringify(req.body.photo) !== JSON.stringify(existingDrink.photo)) {
+      updatedInfo.photo = req.body.photo;
+    }
 
-        const updatedDrink = await Drink.findOneAndUpdate(
-            { _id: drinkID, creatorID }, updatedInfo, { new: true }
-        );
-        res
+    console.log("UpdatedInfo from controller:", updatedInfo)
+    if (Object.keys(updatedInfo).length === 0) {
+      return res.status(200).json({ message: "No Changes Detected" })
+    }
+
+    const updatedDrink = await Drink.findOneAndUpdate(
+      { _id: drinkID, creatorID }, updatedInfo, { new: true }
+    );
+    res
       .status(200)
       .json({ message: "Drink has been updated", updatedDrink });
 
-    } catch (err) {
-        error(res, err)
+  } catch (err) {
+    error(res, err)
 
-    }
-    res.status(200).json({ message: "Drink has been updated", updatedDrink });
   }
-);
+
+});
 
 // !! Delete -- DELETE
 router.delete("/delete/:drinkID", validateSession, async (req, res) => {
@@ -139,16 +124,16 @@ router.delete("/delete/:drinkID", validateSession, async (req, res) => {
 
 // !! Get All by creatorID -- GET
 router.get("/creations/:creatorID/", validateSession, async (req, res) => {
-    try {
-      const creatorID = req.params.creatorID;
-      // const creatorID = req.creator._id;
-      const getAllDrinks = await Drink.find({ creatorID: creatorID });
-  
-      getAllDrinks ? success(res, getAllDrinks) : incomplete(res);
-    } catch (err) {
-      error(res, err);
-    }
-  });
+  try {
+    const creatorID = req.params.creatorID;
+    // const creatorID = req.creator._id;
+    const getAllDrinks = await Drink.find({ creatorID: creatorID });
+
+    getAllDrinks ? success(res, getAllDrinks) : incomplete(res);
+  } catch (err) {
+    error(res, err);
+  }
+});
 
 
 // !! Get One by drinkID -- GET
@@ -171,12 +156,13 @@ router.get("/bycategory/:cat1/:cat2/:cat3", async (req, res) => {
     const cat1 = req.params.cat1
     const cat2 = req.params.cat2
     const cat3 = req.params.cat3
-    const getDrinkByCat = await Drink.find({$or: [
-      {cat1: {$in: [cat1, cat2, cat3]}}, 
-      {cat2: {$in: [cat1, cat2, cat3]}}, 
-      {cat3: {$in: [cat1, cat2, cat3]}}
-    ]
-  });
+    const getDrinkByCat = await Drink.find({
+      $or: [
+        { cat1: { $in: [cat1, cat2, cat3] } },
+        { cat2: { $in: [cat1, cat2, cat3] } },
+        { cat3: { $in: [cat1, cat2, cat3] } }
+      ]
+    });
 
 
     getDrinkByCat ? success(res, getDrinkByCat) : incomplete(res);
