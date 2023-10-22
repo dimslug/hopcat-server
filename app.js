@@ -6,19 +6,19 @@ const app = express();
 const PORT = process.env.PORT || 4000; // points to our environment file and puts the value of PORT from that variable into this port variable.
 const log = console.log;
 const { db } = require("./db");
-const influencer = require("./controllers/influencer.controller");
-const validateSession = require("./middleware/validate-session");
+const influencer = require("./Controllers/influencer.controller");
+const validateSession = require("./Middleware/validate-session");
 const jwt = require("jsonwebtoken");
 const calendar = require("./calendar.js");
 
-//! IMPORTS
+//!
+const promoController = require("./Controllers/promo.controller");
+const drinkController = require("./Controllers/drink.controller");
+const creatorController = require("./Controllers/creator.controller");
+const notificationController = require("./Controllers/notificationController");
+const eventController = require("./Controllers/eventcontroller");
 
-const {
-  promoController,
-  drinkController,
-  creatorController,
-  notificationController,
-} = require("./controllers");
+//! IMPORTS
 
 //! MIDDLEWARE
 //* data handling
