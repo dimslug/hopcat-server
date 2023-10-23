@@ -65,7 +65,7 @@ router.get("/getone/:promoID/", validateSession, async (req, res) => {
 router.get("/upcoming/bydate", async (req, res) => {
     try {
       console.log('inside upcoming try')
-        const getAllPromos = await Promo.find().sort({ startDate: 1 }).limit(15);
+        const getAllPromos = await Promo.find().populate(['creatorID','drinkID']).sort({ startDate: -1 }).limit(15);
         getAllPromos ? success(res, getAllPromos) : incomplete(res);
         console.log(res)
     } catch (err) {
