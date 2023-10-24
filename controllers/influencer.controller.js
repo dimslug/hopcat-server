@@ -29,9 +29,10 @@ router.post("/signup", async (req, res) => {
     const token = jwt.sign({ id: newInfluencer._id }, SECRET, {
       expiresIn: "1 day",
     });
-
+    let influencerID = influencer._id;
     res.status(200).json({
       influencer: newInfluencer,
+      influencerID,
       message: "success",
       token,
     });
@@ -55,10 +56,11 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign({ id: influencer._id }, SECRET, {
       expiresIn: "1 day",
     });
-
+    let influencerID = influencer._id;
     res.status(200).json({
       message: "success",
       influencer,
+      influencerID,
       token,
     });
   } catch (err) {

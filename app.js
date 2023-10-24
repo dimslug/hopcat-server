@@ -11,14 +11,17 @@ const validateSession = require("./Middleware/validate-session");
 const jwt = require("jsonwebtoken");
 const calendar = require("./calendar.js");
 
-//!
-const promoController = require("./Controllers/promo.controller");
-const drinkController = require("./Controllers/drink.controller");
-const creatorController = require("./Controllers/creator.controller");
-const notificationController = require("./Controllers/notificationController");
-const eventController = require("./Controllers/eventcontroller");
+//! Imports
 
-//! IMPORTS
+const eventController = require("./Controllers/eventcontroller");
+const {
+  promoController,
+  drinkController,
+  creatorController,
+  notificationController,
+  reviewController,
+} = require("./controllers");
+
 
 //! MIDDLEWARE
 //* data handling
@@ -32,6 +35,7 @@ app.use("/promo", promoController);
 app.use("/influencer", influencer);
 app.use("/calendar", calendar);
 app.use("/notifications", notificationController);
+app.use("/reviews", reviewController); 
 
 //! Connection
 

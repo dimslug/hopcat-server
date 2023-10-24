@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Drink, Creator, Promo } = require("../models");
+const { Promo } = require("../models");
 const validateSession = require("../middleware/validate-session");
 const { error, success, incomplete } = require("../helpers");
 const log = console.log;
@@ -66,7 +66,7 @@ router.get("/getone/:promoID/", validateSession, async (req, res) => {
 router.get("/upcoming/bydate", async (req, res) => {
     try {
       console.log('inside upcoming try')
-        const getAllPromos = await Promo.find().sort({ startDate: 1 }).limit(15);
+      const getAllPromos = await Promo.find().populate(['creatorID','drinkID']).sort({ startDate: -1 }).limit(15);
         getAllPromos ? success(res, getAllPromos) : incomplete(res);
         console.log(res)
     } catch (err) {
@@ -74,7 +74,6 @@ router.get("/upcoming/bydate", async (req, res) => {
     }
     
 });
-
 
 // !! Update -- PATCH
 router.patch("/edit/:promoID", validateSession, async (req, res) => {
