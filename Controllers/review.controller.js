@@ -1,6 +1,6 @@
-const express = require("express");
-const router = express.Router();
-const Review = require("../models/ReviewModel");
+const router = require("express").Router();
+const { Review } = require("../models")
+const validateSession = require("../middleware/validate-session")
 
 const errorResponse = (res, error) => {
   return res.status(500).json({
@@ -9,19 +9,33 @@ const errorResponse = (res, error) => {
 };
 
 //! Create a new review
-router.post("/reviews", async (req, res) => {
+router.post("/review", validateSession, async (req, res) => {
   try {
-    const userRole = req.user.role;
-    if (userRole === "influencer") {
-      const reviewData = req.body;
-      const newReview = new Review(reviewData);
-      const savedReview = await newReview.save();
-      return res.status(201).json(savedReview);
-    } else {
-      return res
-        .status(403)
-        .json({ error: "Forbidden: Only influencers can create reviews" });
-    }
+    console.log("inside review post: ", req.body)
+    // const userRole = req.user.role;
+    // if (userRole === "influencer") 
+    // {
+      const promoID = req.body.promoID;
+      const inflID = req.body.inflID;
+      const rating = req.body.rating;
+      const description = req.body.description
+      // const photo = req.body.photo
+
+      const review = new Review({
+        promoID: promoID,
+        inflID: inflID,
+        rating: rating,
+        description: description,
+        // photo: photo,
+      });
+
+      const newReview = await review.save();
+      return res.status(201).json(newReview);
+    // } else {
+    //   return res
+    //     .status(403)
+    //     .json({ error: "Forbidden: Only influencers can create reviews" });
+    // }
   } catch (err) {
     errorResponse(res, err);
   }

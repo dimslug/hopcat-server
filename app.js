@@ -18,6 +18,7 @@ const {
   drinkController,
   creatorController,
   notificationController,
+  reviewController,
 } = require("./controllers");
 
 //! MIDDLEWARE
@@ -32,6 +33,7 @@ app.use("/promo", promoController);
 app.use("/influencer", influencer);
 app.use("/calendar", calendar);
 app.use("/notifications", notificationController);
+app.use("/reviews", reviewController); 
 
 //! Connection
 

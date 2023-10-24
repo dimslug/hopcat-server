@@ -22,9 +22,6 @@ const DrinkSchema = new mongoose.Schema({
   cat2: {
     type: String,
   },
-  cat3: {
-    type: String,
-  },
   price: {
     type: Number,
   },
@@ -34,14 +31,12 @@ const DrinkSchema = new mongoose.Schema({
   photo: {
     type: String,
   },
-  ingredients: [],
-
-  averageRating: {
-    type: Number,
+  ratings: {
+    type: Array,
     default: 0,
   },
   numRatings: {
-    type: Number,
+    type: Array,
     default: 0,
   },
 });
