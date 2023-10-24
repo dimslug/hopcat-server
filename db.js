@@ -3,19 +3,25 @@ const connection = process.env.DBURL;
 const collection = process.env.COLL;
 
 const db = async () => {
-
     try {
-
         await mongoose.connect(`${connection}/${collection}`);
 
-        console.log(
-            `Database connected: ${connection}/${collection}`
+
+        try {
+
+            await mongoose.connect(`${connection}/${collection}`);
+
+            console.log(
+                `Database connected: ${connection}/${collection}`
             );
-        
+
+        } catch (err) {
+            throw new Error(`Error: ${err.message}`);
+        }
+
     } catch (err) {
         throw new Error(`Error: ${err.message}`);
     }
-
 }
 
 

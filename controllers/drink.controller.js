@@ -39,65 +39,65 @@ router.post("/create", validateSession, async (req, res) => {
 // !! Update -- PATCH
 router.patch("/edit/:drinkID", validateSession, async (req, res) => {
 
-    try {
-      
-        const drinkID = req.params.drinkID;
-        const creatorID = req.creator._id
-       
+  try {
 
-        const existingDrink = await Drink.findOne({ _id: drinkID, creatorID });
-        console.log(`Existing Drink : ${existingDrink}`)
-        if (!existingDrink) {
-          return res.status(404).json({ message: "Invalid Drink/Creator Combination" })
-        }
+    const drinkID = req.params.drinkID;
+    const creatorID = req.creator._id
 
-        const updatedInfo = {}
 
-        if (req.body.name !== existingDrink.name) {
-          updatedInfo.name = req.body.name
-        }
+    const existingDrink = await Drink.findOne({ _id: drinkID, creatorID });
+    console.log(`Existing Drink : ${existingDrink}`)
+    if (!existingDrink) {
+      return res.status(404).json({ message: "Invalid Drink/Creator Combination" })
+    }
 
-        if (req.body.cat1 !== existingDrink.cat1) {
-          updatedInfo.cat1 = req.body.cat1;
-        }
+    const updatedInfo = {}
 
-        if (req.body.cat2 !== existingDrink.cat2) {
-          updatedInfo.cat2 = req.body.cat2;
-        }
+    if (req.body.name !== existingDrink.name) {
+      updatedInfo.name = req.body.name
+    }
 
-        if (req.body.cat3 !== existingDrink.cat3) {
-          updatedInfo.cat3 = req.body.cat3;
-        }
+    if (req.body.cat1 !== existingDrink.cat1) {
+      updatedInfo.cat1 = req.body.cat1;
+    }
 
-        if (req.body.price !== existingDrink.price) {
-          updatedInfo.price = req.body.price;
-        }
+    if (req.body.cat2 !== existingDrink.cat2) {
+      updatedInfo.cat2 = req.body.cat2;
+    }
 
-        if (req.body.description !== existingDrink.description) {
-          updatedInfo.description = req.body.description;
-        }
+    if (req.body.cat3 !== existingDrink.cat3) {
+      updatedInfo.cat3 = req.body.cat3;
+    }
 
-        if (JSON.stringify(req.body.photo) !== JSON.stringify(existingDrink.photo)) {
-          updatedInfo.photo = req.body.photo;
-        }
-        
-        console.log("UpdatedInfo from controller:", updatedInfo)
-        if (Object.keys(updatedInfo).length === 0) {
-          return res.status(200).json({ message: "No Changes Detected" })
-        }
+    if (req.body.price !== existingDrink.price) {
+      updatedInfo.price = req.body.price;
+    }
 
-        const updatedDrink = await Drink.findOneAndUpdate(
-            { _id: drinkID, creatorID }, updatedInfo, { new: true }
-        );
-        res
+    if (req.body.description !== existingDrink.description) {
+      updatedInfo.description = req.body.description;
+    }
+
+    if (JSON.stringify(req.body.photo) !== JSON.stringify(existingDrink.photo)) {
+      updatedInfo.photo = req.body.photo;
+    }
+
+    console.log("UpdatedInfo from controller:", updatedInfo)
+    if (Object.keys(updatedInfo).length === 0) {
+      return res.status(200).json({ message: "No Changes Detected" })
+    }
+
+    const updatedDrink = await Drink.findOneAndUpdate(
+      { _id: drinkID, creatorID }, updatedInfo, { new: true }
+    );
+    res
       .status(200)
       .json({ message: "Drink has been updated", updatedDrink });
 
-    } catch (err) {
-        error(res, err)
+  } catch (err) {
+    error(res, err)
 
-    }
-  
+  }
+
 });
 
 // !! Delete -- DELETE
@@ -124,16 +124,16 @@ router.delete("/delete/:drinkID", validateSession, async (req, res) => {
 
 // !! Get All by creatorID -- GET
 router.get("/creations/:creatorID/", validateSession, async (req, res) => {
-    try {
-      const creatorID = req.params.creatorID;
-      // const creatorID = req.creator._id;
-      const getAllDrinks = await Drink.find({ creatorID: creatorID });
-  
-      getAllDrinks ? success(res, getAllDrinks) : incomplete(res);
-    } catch (err) {
-      error(res, err);
-    }
-  });
+  try {
+    const creatorID = req.params.creatorID;
+    // const creatorID = req.creator._id;
+    const getAllDrinks = await Drink.find({ creatorID: creatorID });
+
+    getAllDrinks ? success(res, getAllDrinks) : incomplete(res);
+  } catch (err) {
+    error(res, err);
+  }
+});
 
 
 // !! Get One by drinkID -- GET
@@ -156,12 +156,13 @@ router.get("/bycategory/:cat1/:cat2/:cat3", async (req, res) => {
     const cat1 = req.params.cat1
     const cat2 = req.params.cat2
     const cat3 = req.params.cat3
-    const getDrinkByCat = await Drink.find({$or: [
-      {cat1: {$in: [cat1, cat2, cat3]}}, 
-      {cat2: {$in: [cat1, cat2, cat3]}}, 
-      {cat3: {$in: [cat1, cat2, cat3]}}
-    ]
-  });
+    const getDrinkByCat = await Drink.find({
+      $or: [
+        { cat1: { $in: [cat1, cat2, cat3] } },
+        { cat2: { $in: [cat1, cat2, cat3] } },
+        { cat3: { $in: [cat1, cat2, cat3] } }
+      ]
+    });
 
 
     getDrinkByCat ? success(res, getDrinkByCat) : incomplete(res);
