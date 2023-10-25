@@ -28,7 +28,31 @@ const CreatorSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  socials: [],
-});
+  profilePicture: {
+    type: String,
+    trim: true,
+    minlength: 1,
+    maxlength: 100,
+  },
+  bio: {
+    type: String,
+    trim: true,
+    minlength: 1,
+    maxlength: 100,
+  },
+  socialMedia: {
+    type: String,
+    trim: true,
+    minlength: 1,
+    maxlength: 100,
+  },
+  location: {
+    type: String,
+    trim: true,
+    minlength: 1,
+    maxlength: 100,
+  },
+}
+);
 
 module.exports = mongoose.model("Creator", CreatorSchema);
