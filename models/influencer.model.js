@@ -27,6 +27,30 @@ const influencerSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  profilePicture: {
+    type: String,
+    trim: true,
+    minlength: 1,
+    maxlength: 100,
+  },
+  bio: {
+    type: String,
+    trim: true,
+    minlength: 1,
+    maxlength: 100,
+  },
+  socialMedia: {
+    type: String,
+    trim: true,
+    minlength: 1,
+    maxlength: 100,
+  },
+  location: {
+    type: String,
+    trim: true,
+    minlength: 1,
+    maxlength: 100,
+  },
   following: [
     {
       type: mongoose.Schema.Types.ObjectId,
