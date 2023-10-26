@@ -35,10 +35,6 @@ const DrinkSchema = new mongoose.Schema({
     type: Array,
     default: 0,
   },
-  numRatings: {
-    type: Array,
-    default: 0,
-  },
 });
 
 module.exports = mongoose.model("Drink", DrinkSchema);

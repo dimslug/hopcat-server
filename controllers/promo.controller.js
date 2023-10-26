@@ -50,7 +50,7 @@ router.get("/:creatorID/", validateSession, async (req, res) => {
    // !! Get One by drinkID -- GET
 router.get("/getone/:promoID/", validateSession, async (req, res) => {
   try {
-    log(req.params.promoID)
+    log('Promo ID from Get One Controller :', req.params.promoID)
     const promoID = req.params.promoID;
     const getPromo = await Promo.find({ _id: promoID });
 
@@ -65,7 +65,7 @@ router.get("/getone/:promoID/", validateSession, async (req, res) => {
 //!! Get all - Sorted by Starting Time closest to current date/time return 15 in ascending order
 router.get("/upcoming/bydate", async (req, res) => {
     try {
-      console.log('inside upcoming try')
+      console.log('inside upcoming by date try')
       const getAllPromos = await Promo.find().populate(['creatorID','drinkID']).sort({ startDate: -1 }).limit(15);
         getAllPromos ? success(res, getAllPromos) : incomplete(res);
         console.log(res)

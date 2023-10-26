@@ -44,6 +44,11 @@ router.patch("/edit/:drinkID", validateSession, async (req, res) => {
     const drinkID = req.params.drinkID;
     const creatorID = req.creator._id
 
+    try {
+      
+        const drinkID = req.params.drinkID;
+        const creatorID = req.creator._id || req.creatorID
+       
 
     const existingDrink = await Drink.findOne({ _id: drinkID, creatorID });
     console.log(`Existing Drink : ${existingDrink}`)
@@ -52,6 +57,9 @@ router.patch("/edit/:drinkID", validateSession, async (req, res) => {
     }
 
     const updatedInfo = {}
+        const updatedInfo = {}
+
+        if (req.body.ratings === 0)  {updatedInfo.ratings = reg.body.ratings} 
 
     if (req.body.name !== existingDrink.name) {
       updatedInfo.name = req.body.name
@@ -85,16 +93,69 @@ router.patch("/edit/:drinkID", validateSession, async (req, res) => {
     if (Object.keys(updatedInfo).length === 0) {
       return res.status(200).json({ message: "No Changes Detected" })
     }
+        if (JSON.stringify(req.body.photo) !== JSON.stringify(existingDrink.photo)) {
+          updatedInfo.photo = req.body.photo;
+        }
+        
+        console.log("UpdatedInfo from controller:", updatedInfo)
+        if (Object.keys(updatedInfo).length === 0) {
+          return res.status(200).json({ message: "No Changes Detected" })
+        }
 
-    const updatedDrink = await Drink.findOneAndUpdate(
-      { _id: drinkID, creatorID }, updatedInfo, { new: true }
-    );
-    res
+        const updatedDrink = await Drink.findOneAndUpdate(
+            { _id: drinkID, creatorID }, updatedInfo, { new: true }
+        );
+        res
       .status(200)
       .json({ message: "Drink has been updated", updatedDrink });
 
+    } catch (err) {
+        error(res, err)
+
+    }
+  
+});
+
+// !! Update -- PATCH to add Review
+router.patch("/review/:drinkID", validateSession, async (req, res) => {
+
+  try {
+      console.log(req)
+      const drinkID = req.params.drinkID;
+      const creatorID = req.body.creatorID;
+      const newRating = req.body.ratings
+      console.log(drinkID)
+      console.log(creatorID)
+     
+      const existingDrink = await Drink.findOne({ _id: drinkID, creatorID });
+      console.log(`Existing Drink : ${existingDrink}`)
+      if (!existingDrink) {
+        return res.status(404).json({ message: "Invalid Drink/Creator Combination" })
+      }
+
+      const updatedInfo = {
+         
+      $push: { ratings: newRating },
+      }
+
+    
+      console.log("UpdatedInfo from controller:", updatedInfo)
+      if (Object.keys(updatedInfo).length === 0) {
+        return res.status(200).json({ message: "No Changes Detected" })
+      }
+
+
+      const updatedDrink = await Drink.findOneAndUpdate(
+          { _id: drinkID, creatorID }, updatedInfo, { new: true }
+      );
+      res
+    .status(200)
+    .json({ message: "Drink has been updated", updatedDrink });
+
   } catch (err) {
-    error(res, err)
+      error(res, err)
+
+  }
 
   }
 
